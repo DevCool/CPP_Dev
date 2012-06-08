@@ -1,7 +1,7 @@
 
 /*
  *  Game Level - Started as a simple mock of the DarkGDK Sample
- *               "Game Level" now, it is a full working FPS.
+ *               "Game Level" now, it is almost a full working FPS.
  *
  *  Simple FPS DarkGDK Game
  *  Lead Programmer:     Philip "ZeroCooL" Simonson
@@ -31,6 +31,8 @@ bool Moving = false; // this is used because dbKeystate within a dbKeystate is a
 bool Running = false;
 bool noClip = false;
 bool PressingF1 = false; //used when going into noclip
+bool PressingF2 = false; //used when going into fullscreen
+bool fullscreen = false; //used for go into and out of fullscreen mode
 //bool mouseClicked = false; //used to stop multiple events fired on 1 click
 
 float pos_x = 0.0f;
@@ -39,6 +41,8 @@ float pos_z = 0.0f;
 
 char coords_message[256]; // position to the game matrix
 char coords_message2[256]; // position relative to the map
+
+char scancode_message[256]; // for showing scancodes
 
 // here is the function prototypes for my crafty work
 void loadMap(void);
@@ -49,6 +53,9 @@ void playerJump(void);
 void controlCharacter(void);
 void inputKeys(void);
 void displayCoordsOfPlayer(void);
+void displayKeyScanCodes(void);
+void turnFullscreenOn(void);
+void turnFullscreenOff(void);
 
 void DarkGDK(void)
 {
@@ -59,6 +66,7 @@ void DarkGDK(void)
 	SC_Start(); //starts sparkys
 	dbBackdropOff();
 	dbAutoCamOff(); //stops stupid ass objects from moving the camera when they are loaded
+	dbSetWindowTitle("Homebrew DarkGDK FPS");
 	dbSetDisplayMode(800, 600, 32);
 
 	// switch to the media directory
@@ -187,6 +195,8 @@ void updateCamera(int MouseDiffX, int MouseDiffY)
 	{
 		// use my special function
 		displayCoordsOfPlayer();
+		// use my special function for showing scan codes
+		displayKeyScanCodes();
 
 		static float CamSpeed = 0.1;
 		float RotX = dbCameraAngleX();
@@ -457,7 +467,25 @@ void inputKeys(void) //used to debug and see how things are going, also hook som
 	{
 		PressingF1 = false;
 	}
-
+	//ALLOWS YOU TO ENTER FULLSCREEN AND WINDOWED MODE ...
+	if(dbScanCode() == 60 && PressingF2 == false) //when f2 is pressed go into fullscreen or windowed mode
+	{
+		PressingF2 = true;
+		if(fullscreen)
+		{
+			turnFullscreenOff();
+		}
+		else
+		{
+			turnFullscreenOn();
+		}
+	}
+	//keeps the toggle between fullscreen and windowed mode from changing
+	//if the key is held down
+	if(dbScanCode() != 60 && PressingF2 == true)
+	{
+		PressingF2 = false;
+	}
 }
 
 void displayCoordsOfPlayer(void)
@@ -478,4 +506,34 @@ void displayCoordsOfPlayer(void)
 	dbText(0, 14, coords_message);
 	//dbText(0, 24, "Your position relative to the map is:");
 	//dbText(0, 34, coords_message2);
+}
+
+void displayKeyScanCodes(void)
+{
+	//here we have some crap... to display the scan codes for
+	//key presses
+	sprintf(scancode_message, "Current Scancode: [%d]", dbScanCode());
+	dbText(0, 24, scancode_message);
+}
+
+void turnFullscreenOn(void)
+{
+	if(!fullscreen)
+	{
+		fullscreen = true;
+
+		dbSetWindowLayout(0, 0, 1);
+		dbMaximizeWindow();
+	}
+}
+
+void turnFullscreenOff(void)
+{
+	if(fullscreen)
+	{
+		fullscreen = false;
+
+		dbRestoreWindow();
+		dbSetWindowLayout(1, 1, 1);
+	}
 }
