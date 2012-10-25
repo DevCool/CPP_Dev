@@ -4,7 +4,7 @@
  *               "Game Level" now, it is almost a full working FPS.
  *
  *  Simple FPS DarkGDK Game
- *  Lead Programmer:     Philip "ZeroCooL" Simonson
+ *  Lead Programmer:     Philip "ZeroCooL" Simonson (Teaching Phontric how to make a simple FPS game)
  *  Programmer:          Sweden "Phontric"
  *
  */
@@ -82,7 +82,7 @@ void DarkGDK(void)
 
 	// position the player
 	//dbPositionObject(character, dbObjectPositionX(map)+70, dbObjectPositionY(map)+120, dbObjectPositionZ(map)-110); //places player within map
-	dbPositionObject(character, dbObjectPositionX(map), dbObjectPositionY(map)+120, dbObjectPositionZ(map)+60); //places player within map
+	dbPositionObject(character, dbObjectPositionX(map), dbObjectPositionY(map)+25, dbObjectPositionZ(map)); //places player within map
 
 	while (LoopGDK())
 	{
@@ -98,7 +98,7 @@ void DarkGDK(void)
 
 void loadMap(void)
 {
-	dbLoadObject("test_level.x", map);
+	dbLoadObject("Test_Level_01.X", map);
 	dbSetObjectLight(map, 0);
 	dbRotateObject(map, -90.0f, 0.0f, 0.0f);
 	SC_SetupComplexObject(map, 1, 2);
@@ -119,7 +119,7 @@ void loadSkyBox(void)
 void loadMainCharacter(void)
 {
 	dbMakeObjectBox(character, 30, 150, 30);
-//	dbPositionObject(character, (dbObjectPositionX(map)/2)+50, (dbObjectPositionY(map)/2)-200, (dbObjectPositionZ(map)/2)); //places player within map
+	//dbPositionObject(character, (dbObjectPositionX(map)/2)+50, (dbObjectPositionY(map)/2)-200, (dbObjectPositionZ(map)/2)); //places player within map
 	SC_SetupObject(character, 1, 2);//used to check collisions against the environment
 	dbHideObject(character); //hides the main character as this is a FPS
 	
