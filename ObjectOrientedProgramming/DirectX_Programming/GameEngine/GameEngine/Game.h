@@ -2,6 +2,8 @@
 #define GAME_H
 
 #include <Windows.h>
+#include <d3d9.h>
+#include <d3dx9.h>
 #include <string>
 
 class Game
@@ -31,6 +33,8 @@ protected:
 	bool InitGameWindow ();
 	//Initialize Direct3D
 	bool InitDirect3D ();
+	//Initialize present parameters
+	bool InitPresentParameters();
 
 protected:
 	//Attributes
@@ -39,7 +43,13 @@ protected:
 	UINT			m_ClientWidth;
 	UINT			m_ClientHeight;
 	bool			m_bPaused;
+	bool			m_bFullscreen;
 	std::wstring	m_wsGameTitle;
+
+	//DirectX Attributes
+	IDirect3D9*				m_pd3d;
+	IDirect3DDevice9*		m_pd3dDevice;
+	D3DPRESENT_PARAMETERS	m_d3dpp;
 };
 
 #endif //!GAME_H

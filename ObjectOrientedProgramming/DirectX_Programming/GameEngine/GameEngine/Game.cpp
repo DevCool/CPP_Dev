@@ -20,12 +20,20 @@ Game::Game (HINSTANCE hInstance)
 	m_ClientHeight = 600;
 	m_wsGameTitle = L"DirectX9 Game";
 	m_bPaused = false;
+	m_bFullscreen = false;
 	g_pGame = this;
+	m_pd3d = NULL;
+	m_pd3dDevice = NULL;
+	ZeroMemory (&m_d3dpp, sizeof (D3DPRESENT_PARAMETERS));
 }
 
 Game::~Game ()
 {
 	//Release objects from memory if needed
+	if (m_pd3dDevice != NULL)
+		m_pd3dDevice->Release ();
+	if (m_pd3d != NULL)
+		m_pd3d->Release ();
 }
 
 int Game::Run ()
@@ -151,8 +159,66 @@ bool Game::InitGameWindow ()
 
 bool Game::InitDirect3D ()
 {
-	//To be filled in later
+	HRESULT hr;
+
+	// Create our directx interface
+	m_pd3d = Direct3DCreate9 (D3D_SDK_VERSION);
+	// Check to see if it succeeded
+	if (!m_pd3d)
+		return false;
+
+	//Initialize Present Parameters
+	if (!InitPresentParameters ())
+		return false;
+
+	D3DCAPS9 caps;
+	DWORD	 behaviour;
+	hr = m_pd3d->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &caps);
+
+	//Check to see if they have hardware transform and lighting
+	if ( (caps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT) == FALSE ||
+		caps.VertexShaderVersion < D3DVS_VERSION (1, 1))
+		behaviour = D3DCREATE_SOFTWARE_VERTEXPROCESSING;
+	else
+		behaviour = D3DCREATE_HARDWARE_VERTEXPROCESSING;
+
+	hr = m_pd3d->CreateDevice (D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, m_hGameWindow,
+		behaviour, &m_d3dpp, &m_pd3dDevice);
+
+	if (FAILED (hr))
+	{
+		MessageBox (NULL, L"Cannot create directx 9 device", L"Fatal Error", MB_OK | MB_ICONERROR);
+		return FALSE;
+	}
+
 	return true;
+}
+
+bool Game::InitPresentParameters ()
+{
+	try
+	{
+		//Fill out d3dpp
+		m_d3dpp.BackBufferWidth = m_ClientWidth;
+		m_d3dpp.BackBufferHeight = m_ClientHeight;
+		if (m_bFullscreen)
+			m_d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8; // 24 BIT Format
+		else
+			m_d3dpp.BackBufferFormat = D3DFMT_UNKNOWN; // Use desktop format
+		m_d3dpp.BackBufferCount = 1; //Double backbuffer
+		m_d3dpp.hDeviceWindow = m_hGameWindow; //MainWindow
+		m_d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+		m_d3dpp.Windowed = (!m_bFullscreen); //Not fullscreen
+		m_d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE; //Immediately show onscreen
+
+		return true;
+	}
+	catch (...)
+	{
+		MessageBox (NULL, L"Cannot initialize present parameters.", L"Error!", MB_OK | MB_ICONERROR);
+	}
+
+	return false;
 }
 
 LRESULT Game::MsgProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -162,6 +228,13 @@ LRESULT Game::MsgProc (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage (0);
 		return 0;
+	case WM_KEYDOWN:
+		switch (wParam)
+		{
+		case VK_ESCAPE:
+			PostQuitMessage (0);
+			return 0;
+		}
 	}
 
 	return DefWindowProc (hWnd, uMsg, wParam, lParam);
