@@ -2,7 +2,6 @@
 // Microsoft Visual C++ generated include file.
 // Used by Resource.rc
 //
-#define IDB_SKULL                       102
 #define DLG_SCREENSAVECONFIGURE         2003
 
 // Next default values for new objects

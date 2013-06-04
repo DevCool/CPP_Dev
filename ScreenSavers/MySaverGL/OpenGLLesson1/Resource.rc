@@ -80,13 +80,6 @@ BEGIN
 END
 #endif    // APSTUDIO_INVOKED
 
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// Bitmap
-//
-
-IDB_SKULL               BITMAP                  "C:\\Users\\Philip\\Documents\\GitHub\\CPP_Dev\\ScreenSavers\\MySaverGL\\OpenGLLesson1\\texture.bmp"
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 

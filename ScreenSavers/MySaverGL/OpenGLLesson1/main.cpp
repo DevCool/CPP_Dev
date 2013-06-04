@@ -53,8 +53,8 @@ void OnTimer(HDC hDC);
 
 GLuint texture[1];
 
-int Width, Height; //globals for size of screen
-
+GLsizei Width, Height; //globals for size of screen
+static HDC hDc;//global
 
 //////////////////////////////////////////////////
 ////   INFRASTRUCTURE -- THE THREE FUNCTIONS   ///
@@ -79,6 +79,9 @@ LRESULT WINAPI ScreenSaverProc(HWND hWnd, UINT message,
 
 	  //get configuration from registry
 	  GetConfig();
+
+	  //get DeviceContext and put to global var
+	  hDc = GetDC(hWnd);
 
 	  // setup OpenGL, then animation
 	  InitGL( hWnd, hDC, hRC );
@@ -206,6 +209,7 @@ static void CloseGL(HWND hWnd, HDC hDC, HGLRC hRC)
 	ReleaseDC( hWnd, hDC );
 }
 
+GLfloat x1=0.0,y1=0.0,x2=75.0,y2=75.0,xstep=1.0,ystep=1.0;
 
 void SetupAnimation(int Width, int Height)
 {
@@ -239,57 +243,68 @@ void SetupAnimation(int Width, int Height)
 	//no need to initialize any objects
 	//but this is where I'd do it
 
-	glColor3f(1.0f, 1.0f, 1.0f); //green	
+	glColor3f(1.0f, 1.0f, 1.0f); //green
 }
 
-static GLfloat spin=0;   //a global to keep track of the square's spinning
-
+//static GLfloat spin=0;   //a global to keep track of the square's spinning
 
 void OnTimer(HDC hDC) //increment and display
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	spin = spin + 1; 
-
-	glPushMatrix();
-	glRotatef(spin, 0.0, 0.0, 1.0);
-
-	glPushMatrix();
-
-	glTranslatef(150, 0, 0);
-
-	if(bTumble)
-		glRotatef(spin * -3.0, 0.0, 0.0, 1.0); 
-	else
-		glRotatef(spin * -1.0, 0.0, 0.0, 1.0);  
-
-	//draw the square (rotated to be a diamond)
-
-/*	float xvals[] = {-30.0, 0.0, 30.0, 0.0};
-	float yvals[] = {0.0, -30.0, 0.0, 30.0};
-*/
-
-/*	for (int a=0; a < 4; a++)
-	{
-		glTexCoord2d(xvals2[a], yvals2[a]);
-		glVertex2f(xvals[a], yvals[a]);
-	}*/
-
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBegin(GL_POLYGON);
-		 glVertex2f(0.0, 0.0f);	glTexCoord2f(0.0f, 0.0f);				// Bottom Left
-		 glVertex2f(0.0f, 40.0f); glTexCoord2f(0.0f, 1.0f);				// Top Left
-		 glVertex2f(40.0f, 40.0f); glTexCoord2f(1.0f,1.0f);				// Top Right
-		 glVertex2f(40.0f, 0.0f); glTexCoord2f(1.0f, 0.0f);					// Bottom Right
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(x1, y2);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(x2, y2);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(x2, y1);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(x1, y1);
 	glEnd();
-
-	glPopMatrix();
-
 	glFlush();
 	SwapBuffers(hDC);
-	glPopMatrix();
+
+    // Check bounds.  This is in case the window is made
+    // smaller and the rectangle is outside the new
+    // clipping volume
+	if(x1 > Width || x1 < 0)
+	{
+		x1 += xstep;
+	}
+	else if(x1 > Height || x1 < 0)
+	{
+		x1 -= xstep;
+	}
+	else if(x2 > Width || x2 < 0)
+	{
+		x2 -= xstep;
+	}
+	else if(x2 > Height || x2 < 0)
+	{
+		x2 += xstep;
+	}
+
+	if(y1 > Height || y1 < 0)
+	{
+		y1 += ystep;
+	}
+	else if(y1 > Width || y1 < 0)
+	{
+		y1 -= ystep;
+	}
+	else if(y2 > Height || y2 < 0)
+	{
+		y2 += ystep;
+	}
+	else if(y2 > Width || y2 < 0)
+	{
+		y2 -= ystep;
+	}
+
+    // Actually move the square
+    x1 += xstep;
+	x2 += xstep;
+    y1 += ystep;
+	y2 += ystep;
 }
 
 void CleanupAnimation()
@@ -364,7 +379,7 @@ AUX_RGBImageRec *LoadBMP(char* Filename)
 	if(!Filename)
 		return NULL;
 
-	File=fopen("texture.bmp", "r");
+	File=fopen(Filename, "r");
 
 	if(File)
 	{
