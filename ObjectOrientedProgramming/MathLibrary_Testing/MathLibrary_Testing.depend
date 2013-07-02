@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1372148844 source:c:\users\philip\desktop\cpp_projects\mathlibrary_testing\main.cpp
+	"Shape.h"
+
+1372149420 c:\users\philip\desktop\cpp_projects\mathlibrary_testing\shape.h
+	<iostream>
+	<iomanip>
+	<cmath>
+

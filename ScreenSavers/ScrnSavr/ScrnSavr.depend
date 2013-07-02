@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1371965892 source:c:\users\philip\desktop\cpp_projects\scrnsavr\main.cpp
+	<windows.h>
+	<scrnsave.h>
+
