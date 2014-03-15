@@ -9,7 +9,7 @@
 bool bRunning = false;
 
 HWND hWndMain = NULL;
-HWND hWndWindows[256];
+HWND *hWndWindows = new HWND[256];
 HWND* pWndArray = hWndWindows;
 
 HINSTANCE g_hInst = NULL;
@@ -139,7 +139,24 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 				NULL); */
 		} break;
 	case WM_DESTROY:
+		{
+			for(int i = 0; i < sizeof(pWndArray); ++i)
+			{
+				ShowWindow(pWndArray[i], SW_SHOWNORMAL);
+				UpdateWindow(pWndArray[i]);
+				pWndArray[i] = NULL;
+			}
+
+			PostQuitMessage(0);
+		} break;
+	case WM_CLOSE:
+		DestroyWindow(hwnd);
 		PostQuitMessage(0);
+		break;
+	case WM_QUIT:
+		delete [] hWndWindows;
+		delete pWndArray;
+		ExitProcess(0);
 		break;
 	case WM_PAINT:
 		{
