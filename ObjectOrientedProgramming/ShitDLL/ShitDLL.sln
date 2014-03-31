@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShitDLL", "ShitDLL\ShitDLL.vcxproj", "{C0180D3C-3CAE-4302-8CD0-AFD557123BAB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shit1EXE", "Shit1EXE\Shit1EXE.vcxproj", "{EE5B5B9F-2CCB-4EC5-AE43-76BE3403A1DE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0180D3C-3CAE-4302-8CD0-AFD557123BAB} = {C0180D3C-3CAE-4302-8CD0-AFD557123BAB}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0180D3C-3CAE-4302-8CD0-AFD557123BAB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C0180D3C-3CAE-4302-8CD0-AFD557123BAB}.Debug|Win32.Build.0 = Debug|Win32
+		{C0180D3C-3CAE-4302-8CD0-AFD557123BAB}.Release|Win32.ActiveCfg = Release|Win32
+		{C0180D3C-3CAE-4302-8CD0-AFD557123BAB}.Release|Win32.Build.0 = Release|Win32
+		{EE5B5B9F-2CCB-4EC5-AE43-76BE3403A1DE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EE5B5B9F-2CCB-4EC5-AE43-76BE3403A1DE}.Debug|Win32.Build.0 = Debug|Win32
+		{EE5B5B9F-2CCB-4EC5-AE43-76BE3403A1DE}.Release|Win32.ActiveCfg = Release|Win32
+		{EE5B5B9F-2CCB-4EC5-AE43-76BE3403A1DE}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
