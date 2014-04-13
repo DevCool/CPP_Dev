@@ -38,8 +38,6 @@ CWindow::CWindow()
 	m_bRunning = false;
 	m_hInst = NULL;
 	m_pWindows = new HWND [256];
-	for(int i=0; i<sizeof(m_pWindows); i++)
-		m_pWindows[i] = NULL;
 }
 
 CWindow::~CWindow()
@@ -133,7 +131,7 @@ LRESULT CWindow::MessageProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		{
 			sndPlaySound( L"Sounds\\ExitSnd.wav", SND_SYNC );
 
-			for( int i = 0; i < sizeof(m_pWindows); i++ )
+			for( int i = 0; i < sizeof(m_pWindows-1); i++ )
 			{
 				if( m_pWindows[i] != NULL )
 				{
@@ -157,7 +155,7 @@ LRESULT CWindow::MessageProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 					{
 						HWND hWnd_Temp = GetForegroundWindow();
 
-						for( int i = 0; i < sizeof(m_pWindows); i++ )
+						for( int i = 0; i < sizeof(m_pWindows-1); i++ )
 						{
 							if( m_pWindows[i] == NULL )
 							{
@@ -170,7 +168,7 @@ LRESULT CWindow::MessageProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 					}
 					else if( GetAsyncKeyState( VK_F10 ) )
 					{
-						for( int i = 0; i < sizeof(m_pWindows); i++ )
+						for( int i = 0; i < sizeof(m_pWindows-1); i++ )
 						{
 							if(m_pWindows[i] != NULL)
 							{

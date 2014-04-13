@@ -14,8 +14,9 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShow
 	{
 		WndInterface->CreateWnd(L"Test Title", wSize );
 		WndInterface->Run();
+		WndInterface->Release();
+		UnregisterClass(L"Main_ClAsS", hInstance);
 	}
 
-	WndInterface->Release();
 	return TRUE;
 }
