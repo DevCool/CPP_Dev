@@ -2,6 +2,8 @@
 #define SHADERINTERFACE_H
 
 #include <iostream>
+#define GLEW_STATIC
+#include <GL/glew.h>
 #include "ShaderLoader.h"
 
 class ShaderInterface

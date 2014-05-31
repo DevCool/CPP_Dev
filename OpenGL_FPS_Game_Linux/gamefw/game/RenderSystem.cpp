@@ -3,7 +3,7 @@
 RenderSystem::RenderSystem(): _window(glfwGetCurrentContext())
 {
 	shaderArray = new std::vector<ShaderInterface *>;
-	ShaderInterface *shader = new ShaderInterface("game/RenderSystem/Shaders/ColorShader.vsh", "game/RenderSystem/Shaders/ColorShader.fsh");
+	ShaderInterface *shader = new ShaderInterface("ColorShader.vsh", "ColorShader.fsh");
 	shaderArray->push_back(shader);
 }
 
