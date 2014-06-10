@@ -1,19 +1,12 @@
 #include "GameManager.h"
 
-GLfloat vertices[] =
+GameManager::GameManager(bool running): _running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem()), _resourceManager(&ResourceManager::getResourceManager())
 {
-	-0.5, -0.5, 0.0,
-	 0.5, -0.5, 0.0,
-	 0.0,  0.5, 0.0
-};
-
-GameManager::GameManager(bool running): _running(running), _window(glfwGetCurrentContext()), _renderSystem(&RenderSystem::getRenderSystem())
-{
-	vertexBuffer = new VertexBuffer(vertices, sizeof(vertices), GL_TRIANGLES, 3, sizeof(GLfloat)*3);
 }
 
 GameManager::~GameManager()
 {
+	_resourceManager->destroyResourceManager();
 	_renderSystem->destroyRenderSystem();
 }
 
@@ -22,7 +15,7 @@ void GameManager::runGameLoop()
 	while (_running)
 	{
 		_running = !glfwWindowShouldClose(_window);
-		_renderSystem->render(vertexBuffer);
+		_renderSystem->render((_resourceManager->getVertexBufferArray())->at(0));
 	}
 }
 

@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 
 #include "RenderSystem.h"
+#include "ResourceManager.h"
 
 class GameManager
 {
@@ -16,8 +17,7 @@ private:
 	bool _running;
 	GLFWwindow *_window;
 	RenderSystem *_renderSystem;
-
-	VertexBuffer *vertexBuffer;
+	ResourceManager *_resourceManager;
 
 	GameManager(bool _running);
 	~GameManager();

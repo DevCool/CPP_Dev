@@ -6,6 +6,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "ShaderInterface.h"
+
 class VertexBuffer
 {
 private:
@@ -16,14 +18,17 @@ private:
 	GLsizei _count;
 	GLsizei _stride;
 
+	ShaderInterface *_shader;
+
 public:
 
 	GLuint getVertexBufferID();
+	ShaderInterface *getShader();
 
-	VertexBuffer(const GLvoid *data, GLsizeiptr size, GLenum mode, GLsizei count, GLsizei stride);
+	VertexBuffer(const GLvoid *data, GLsizeiptr size, GLenum mode, GLsizei count, GLsizei stride, ShaderInterface *shader);
 	~VertexBuffer();
 
-	void configureVertexAttributes(GLint vertexPosition);
+	void configureVertexAttributes();
 	void renderVertexBuffer();
 };
 

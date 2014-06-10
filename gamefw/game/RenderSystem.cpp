@@ -2,29 +2,24 @@
 
 RenderSystem::RenderSystem(): _window(glfwGetCurrentContext())
 {
-	shaderArray = new std::vector<ShaderInterface *>;
-	ShaderInterface *shader = new ShaderInterface("ColorShader.vsh", "ColorShader.fsh");
-	shaderArray->push_back(shader);
 }
 
 RenderSystem::~RenderSystem()
 {
-	delete shaderArray->at(0);
-	delete shaderArray;
 }
 
 void RenderSystem::render(VertexBuffer *vertexBuffer)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram(1);
+	glUseProgram((vertexBuffer->getShader())->getProgramHandle());
 
 	glLoadIdentity();
 	gluLookAt(0.0, 0.0, -5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
-	glUniform4f(0, 1.0, 0.0, 0.0, 1.0);
+	glUniform4f((vertexBuffer->getShader())->get_uColor(), 1.0, 0.65, 1.0, 1.0);
 
-	vertexBuffer->configureVertexAttributes(0);
+	vertexBuffer->configureVertexAttributes();
 	vertexBuffer->renderVertexBuffer();
 
 	glfwSwapBuffers(_window);

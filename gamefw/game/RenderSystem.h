@@ -17,8 +17,6 @@ private:
 
 	GLFWwindow *_window;
 
-	std::vector<ShaderInterface *> *shaderArray;
-
 	RenderSystem();
 	~RenderSystem();
 
