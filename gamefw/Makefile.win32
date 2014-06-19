@@ -1,17 +1,17 @@
 #Makefile Testing
 #Coded by Philip Simonson. (AKA DevCool)
 
-CC=g++
-CFLAGS=-O2 -Wall -I./game
-LDFLAGS=-lglfw -lGL -lGLU -lGLEW
+CC=i686-w64-mingw32-g++
+CFLAGS=-O3 -Wall -I./game
+LDFLAGS=-lglfw3dll -lglew32 -lopengl32 -lglu32
 GDIR=game
 
-all: fps clean
+all: win32/game.exe clean
 
-.PHONY: clean cleanest
+rebuild: cleanest all
 
-fps: main.o GameManager.o RenderSystem.o VertexBuffer.o ShaderLoader.o ShaderInterface.o ResourceManager.o
-	$(CC) $(LDFLAGS) main.o GameManager.o RenderSystem.o VertexBuffer.o ShaderLoader.o ShaderInterface.o ResourceManager.o -o fps
+win32/game.exe: main.o GameManager.o RenderSystem.o VertexBuffer.o ShaderLoader.o ShaderInterface.o ResourceManager.o
+	$(CC) -o $@ main.o GameManager.o RenderSystem.o VertexBuffer.o ShaderLoader.o ShaderInterface.o ResourceManager.o $(LDFLAGS)
 
 main.o:	$(GDIR)/main.cpp
 	$(CC) $(CFLAGS) -c $(GDIR)/main.cpp
@@ -38,5 +38,5 @@ clean:
 	rm *.o
 
 cleanest:
-	rm fps
+	rm win32/game.exe
 
