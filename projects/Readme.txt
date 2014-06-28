@@ -15,5 +15,7 @@ opengl2 - Simple OpenGL Window with a Triangle.
 
 opengl3 - Simple SDL/OpenGL Window with Rotating cube,
           and a static Triangle.
-          
+
+opengl4 - Simple SDL/OpenGL Window with Rotating plane
+          textured.          
 

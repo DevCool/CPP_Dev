@@ -6,7 +6,7 @@ LDFLAGS=
 LDFLAGS2=-lSDL
 LDFLAGS3=-lSDL -lGL -lGLU
 
-all: bin/fileio bin/opengl1 bin/opengl2 bin/opengl3 clean
+all: bin/fileio bin/opengl1 bin/opengl2 bin/opengl3 bin/opengl4 clean
 
 rebuild: cleanest all
 
@@ -43,15 +43,26 @@ opengl3/main.o: opengl3/main.cpp
 opengl3/program.o: opengl3/program.cpp
 	$(CC) $(CFLAGS) -c opengl3/program.cpp -o $@
 
+bin/opengl4: opengl4/main.o opengl4/program.o
+	$(CC) opengl4/main.o opengl4/program.o -o $@ $(LDFLAGS3)
+	
+opengl4/main.o: opengl4/main.cpp
+	$(CC) $(CFLAGS) -c opengl4/main.cpp -o $@
+	
+opengl4/program.o: opengl4/program.cpp
+	$(CC) $(CFLAGS) -c opengl4/program.cpp -o $@
+
 clean:
 	rm fileio/*.o
 	rm opengl1/*.o
 	rm opengl2/*.o
 	rm opengl3/*.o
+	rm opengl4/*.o
 	
 cleanest:
 	rm bin/fileio
 	rm bin/opengl1
 	rm bin/opengl2
 	rm bin/opengl3
+	rm bin/opengl4
 
