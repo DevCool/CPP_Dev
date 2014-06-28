@@ -1,0 +1,37 @@
+#!/bin/make
+
+CC=i686-w64-mingw32-g++
+CFLAGS=-O3 -Wall
+LDFLAGS=
+LDFLAGS2=-lmingw32 -lSDLmain -lSDL
+
+all: bin/fileio.exe bin/opengl1.exe clean
+
+rebuild: cleanest all
+
+bin/fileio.exe: fileio/main.o fileio/program.o fileio/loopClass.o
+	$(CC) fileio/main.o fileio/program.o fileio/loopClass.o -o $@ $(LDFLAGS)
+
+fileio/main.o: fileio/main.cpp
+	$(CC) $(CFLAGS) -c fileio/main.cpp -o $@
+	
+fileio/program.o: fileio/program.cpp
+	$(CC) $(CFLAGS) -c fileio/program.cpp -o $@
+
+fileio/loopClass.o: fileio/loopClass.cpp
+	$(CC) $(CFLAGS) -c fileio/loopClass.cpp -o $@
+
+bin/opengl1.exe: opengl1/main.o
+	$(CC) opengl1/main.o -o $@ $(LDFLAGS2)
+
+opengl1/main.o: opengl1/main.cpp
+	$(CC) $(CFLAGS) -c opengl1/main.cpp -o $@
+
+clean:
+	rm fileio/*.o
+	rm opengl1/*.o
+	
+cleanest:
+	rm bin/fileio.exe
+	rm bin/opengl1.exe
+
