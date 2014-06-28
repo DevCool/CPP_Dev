@@ -43,15 +43,14 @@ int program::Start()
 
 void program::Update()
 {
-	if(iCubeAngle<=360&&iCubeAngle>=0)
-		iCubeAngle+=1.0;
-	else
-		iCubeAngle=0.0;
+	iCubeAngle+=0.5;
+	if(iCubeAngle>360)
+		iCubeAngle-=360;
 }
 
 void program::Render()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslatef(2.0,0.0,-10.0);
 	glCallList(iTriangle);
@@ -71,6 +70,7 @@ void program::Init()
 	glLoadIdentity();
 	gluPerspective(45,640.0/480.0,1.0,500.0);
 	glMatrixMode(GL_MODELVIEW);
+	glEnable(GL_DEPTH_TEST);
 	DisplayLists();
 }
 
