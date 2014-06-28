@@ -1,9 +1,12 @@
 #include <SDL/SDL.h>
 
+
+SDL_Surface* screen=NULL;
+
 int main(int argc, char** argv)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_Surface* screen=SDL_SetVideoMode(640,480,32,SDL_SWSURFACE);
+	screen=SDL_SetVideoMode(640,480,32,SDL_SWSURFACE);
 	bool running=true;
 	Uint32 start;
 	SDL_Event event;

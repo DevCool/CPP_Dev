@@ -3,9 +3,10 @@
 CC=g++
 CFLAGS=-O3 -Wall -fmessage-length=0
 LDFLAGS=
-LDFLAGS2=-lSDLmain -lSDL
+LDFLAGS2=-lSDL
+LDFLAGS3=-lSDL -lGL -lGLU
 
-all: bin/fileio bin/opengl1 clean
+all: bin/fileio bin/opengl1 bin/opengl2 bin/opengl3 clean
 
 rebuild: cleanest all
 
@@ -27,11 +28,30 @@ bin/opengl1: opengl1/main.o
 opengl1/main.o: opengl1/main.cpp
 	$(CC) $(CFLAGS) -c opengl1/main.cpp -o $@
 
+bin/opengl2: opengl2/main.o
+	$(CC) opengl2/main.o -o $@ $(LDFLAGS3)
+
+opengl2/main.o: opengl2/main.cpp
+	$(CC) $(CFLAGS) -c opengl2/main.cpp -o $@
+
+bin/opengl3: opengl3/main.o opengl3/program.o
+	$(CC) opengl3/main.o opengl3/program.o -o $@ $(LDFLAGS3)
+	
+opengl3/main.o: opengl3/main.cpp
+	$(CC) $(CFLAGS) -c opengl3/main.cpp -o $@
+	
+opengl3/program.o: opengl3/program.cpp
+	$(CC) $(CFLAGS) -c opengl3/program.cpp -o $@
+
 clean:
 	rm fileio/*.o
 	rm opengl1/*.o
+	rm opengl2/*.o
+	rm opengl3/*.o
 	
 cleanest:
 	rm bin/fileio
 	rm bin/opengl1
+	rm bin/opengl2
+	rm bin/opengl3
 

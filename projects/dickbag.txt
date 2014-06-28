@@ -1,5 +1,0 @@
-This is just a test some things don't work when you do them
-but, maybe this time it'll work!
-!quit
-!quit
-!quit!quit

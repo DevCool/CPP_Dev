@@ -1,16 +1,19 @@
-============================================================
-			This is just a bunch of Projects
-				that I happen to be work-
-				  ing on at the moment.
-============================================================
+=======================================================
+         This is just a simple project test
+            for opengl/SDL with C++
+      -------------------------------------------
+           .:[ by Philip Simonson ]:.
+=======================================================
 
-fileio - just a test project.
+projects include....
 
-opengl1 - just a test SDL project.
+fileio - Simple file input output using C++.
 
-============================================================
+opengl1 - Simple SDL window (OpenGL Window).
 
-In ARCH Linux they can be compiled with both of the make
-files. For Linux or for Windows.
+opengl2 - Simple OpenGL Window with a Triangle.
 
--DevCool
+opengl3 - Simple SDL/OpenGL Window with Rotating cube,
+          and a static Triangle.
+          
+
