@@ -19,3 +19,6 @@ opengl3 - Simple SDL/OpenGL Window with Rotating cube,
 opengl4 - Simple SDL/OpenGL Window with Rotating plane
           textured.          
 
+opengl5 - Simple SDL/OpenGL Window with Wavefront (.obj)
+          file loader [3D Model Loader Simple]
+

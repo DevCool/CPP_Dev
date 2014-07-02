@@ -6,7 +6,7 @@ LDFLAGS=
 LDFLAGS2=-lmingw32 -lSDLmain -lSDL
 LDFLAGS3=-lmingw32 -lSDLmain -lSDL -lopengl32 -lglu32
 
-all: bin/fileio.exe bin/opengl1.exe bin/opengl2.exe bin/opengl3.exe bin/opengl4.exe clean
+all: bin/fileio.exe bin/opengl1.exe bin/opengl2.exe bin/opengl3.exe bin/opengl4.exe bin/opengl5.exe clean
 
 rebuild: cleanest all
 
@@ -52,12 +52,23 @@ opengl4/main.o: opengl4/main.cpp
 opengl4/program.o: opengl4/program.cpp
 	$(CC) $(CFLAGS) -c opengl4/program.cpp -o $@
 
+bin/opengl5.exe: opengl5/main.o opengl5/program.o
+	$(CC) opengl5/main.o opengl5/program.o -o $@ $(LDFLAGS3)
+	
+opengl5/main.o: opengl5/main.cpp
+	$(CC) $(CFLAGS) -c opengl5/main.cpp -o $@
+	
+opengl5/program.o: opengl5/program.cpp
+	$(CC) $(CFLAGS) -c opengl5/program.cpp -o $@
+
+
 clean:
 	rm fileio/*.o
 	rm opengl1/*.o
 	rm opengl2/*.o
 	rm opengl3/*.o
 	rm opengl4/*.o
+	rm opengl5/*.o
 	
 cleanest:
 	rm bin/fileio.exe
@@ -65,4 +76,5 @@ cleanest:
 	rm bin/opengl2.exe
 	rm bin/opengl3.exe
 	rm bin/opengl4.exe
+	rm bin/opengl5.exe
 
