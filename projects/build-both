@@ -3,7 +3,7 @@
 ####################################################
 
 if [ -d "bin" ]; then
-	if [[ -e bin/fileio && -e bin/opengl1 && -e bin/opengl2 && -e bin/opengl3 && -e bin/opengl4 && -e bin/opengl5 ]]; then
+	if [[ -e bin/fileio && -e bin/employee && -e bin/opengl1 && -e bin/opengl2 && -e bin/opengl3 && -e bin/opengl4 && -e bin/opengl5 ]]; then
 		echo Files exist rebuilding...
 		make -f Makefile.linux rebuild
 	else
@@ -11,7 +11,7 @@ if [ -d "bin" ]; then
 		make -f Makefile.linux all
 	fi
 
-	if [[ -e bin/fileio.exe && -e bin/opengl1.exe && -e bin/opengl2.exe && -e bin/opengl3.exe && -e bin/opengl4.exe && -e bin/opengl5.exe ]]; then
+	if [[ -e bin/fileio.exe && -e bin/employee.exe && -e bin/opengl1.exe && -e bin/opengl2.exe && -e bin/opengl3.exe && -e bin/opengl4.exe && -e bin/opengl5.exe ]]; then
 		echo Win32 Files exist rebuilding...
 		make -f Makefile.win32 rebuild
 	else

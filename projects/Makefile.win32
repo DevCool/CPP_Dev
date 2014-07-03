@@ -1,77 +1,54 @@
 #!/bin/make
 
+
+
 CC=i686-w64-mingw32-g++
 CFLAGS=-O3 -Wall
-LDFLAGS=
+LDFLAGS=-static-libgcc -static-libstdc++
 LDFLAGS2=-lmingw32 -lSDLmain -lSDL
 LDFLAGS3=-lmingw32 -lSDLmain -lSDL -lopengl32 -lglu32
 
-all: bin/fileio.exe bin/opengl1.exe bin/opengl2.exe bin/opengl3.exe bin/opengl4.exe bin/opengl5.exe clean
 
-rebuild: cleanest all
 
-bin/fileio.exe: fileio/main.o fileio/program.o fileio/loopClass.o
-	$(CC) fileio/main.o fileio/program.o fileio/loopClass.o -o $@ $(LDFLAGS)
+all: bin/fileio.exe bin/employee.exe bin/opengl1.exe bin/opengl2.exe bin/opengl3.exe bin/opengl4.exe bin/opengl5.exe
 
-fileio/main.o: fileio/main.cpp
-	$(CC) $(CFLAGS) -c fileio/main.cpp -o $@
-	
-fileio/program.o: fileio/program.cpp
-	$(CC) $(CFLAGS) -c fileio/program.cpp -o $@
 
-fileio/loopClass.o: fileio/loopClass.cpp
-	$(CC) $(CFLAGS) -c fileio/loopClass.cpp -o $@
+rebuild: clean all
 
-bin/opengl1.exe: opengl1/main.o
-	$(CC) opengl1/main.o -o $@ $(LDFLAGS2)
 
-opengl1/main.o: opengl1/main.cpp
-	$(CC) $(CFLAGS) -c opengl1/main.cpp -o $@
 
-bin/opengl2.exe: opengl2/main.o
-	$(CC) opengl2/main.o -o $@ $(LDFLAGS3)
+bin/fileio.exe: fileio/*.cpp
+	$(CC) $(CFLAGS) fileio/*.cpp -o $@ $(LDFLAGS)
 
-opengl2/main.o: opengl2/main.cpp
-	$(CC) $(CFLAGS) -c opengl2/main.cpp -o $@
 
-bin/opengl3.exe: opengl3/main.o opengl3/program.o
-	$(CC) opengl3/main.o opengl3/program.o -o $@ $(LDFLAGS3)
-	
-opengl3/main.o: opengl3/main.cpp
-	$(CC) $(CFLAGS) -c opengl3/main.cpp -o $@
-	
-opengl3/program.o: opengl3/program.cpp
-	$(CC) $(CFLAGS) -c opengl3/program.cpp -o $@
+bin/employee.exe: Employee/*.cpp
+	$(CC) $(CFLAGS) Employee/*.cpp -o $@ $(LDFLAGS)
 
-bin/opengl4.exe: opengl4/main.o opengl4/program.o
-	$(CC) opengl4/main.o opengl4/program.o -o $@ $(LDFLAGS3)
-	
-opengl4/main.o: opengl4/main.cpp
-	$(CC) $(CFLAGS) -c opengl4/main.cpp -o $@
-	
-opengl4/program.o: opengl4/program.cpp
-	$(CC) $(CFLAGS) -c opengl4/program.cpp -o $@
 
-bin/opengl5.exe: opengl5/main.o opengl5/program.o
-	$(CC) opengl5/main.o opengl5/program.o -o $@ $(LDFLAGS3)
-	
-opengl5/main.o: opengl5/main.cpp
-	$(CC) $(CFLAGS) -c opengl5/main.cpp -o $@
-	
-opengl5/program.o: opengl5/program.cpp
-	$(CC) $(CFLAGS) -c opengl5/program.cpp -o $@
+bin/opengl1.exe: opengl1/*.cpp
+	$(CC) $(CFLAGS) opengl1/*.cpp -o $@ $(LDFLAGS2)
+
+
+bin/opengl2.exe: opengl2/*.cpp
+	$(CC) $(CFLAGS) opengl2/*.cpp -o $@ $(LDFLAGS3)
+
+
+bin/opengl3.exe: opengl3/*.cpp
+	$(CC) $(CFLAGS) opengl3/*.cpp -o $@ $(LDFLAGS3)
+
+
+bin/opengl4.exe: opengl4/*.cpp
+	$(CC) $(CFLAGS) opengl4/*.cpp -o $@ $(LDFLAGS3)
+
+
+bin/opengl5.exe: opengl5/*.cpp
+	$(CC) $(CFLAGS) opengl5/*.cpp -o $@ $(LDFLAGS3)
+
 
 
 clean:
-	rm fileio/*.o
-	rm opengl1/*.o
-	rm opengl2/*.o
-	rm opengl3/*.o
-	rm opengl4/*.o
-	rm opengl5/*.o
-	
-cleanest:
 	rm bin/fileio.exe
+	rm bin/employee.exe
 	rm bin/opengl1.exe
 	rm bin/opengl2.exe
 	rm bin/opengl3.exe
