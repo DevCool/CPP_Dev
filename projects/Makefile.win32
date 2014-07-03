@@ -1,4 +1,4 @@
-#!/bin/make
+#!/bin/bash make
 
 
 
@@ -10,19 +10,15 @@ LDFLAGS3=-lmingw32 -lSDLmain -lSDL -lopengl32 -lglu32
 
 
 
-all: bin/fileio.exe bin/employee.exe bin/opengl1.exe bin/opengl2.exe bin/opengl3.exe bin/opengl4.exe bin/opengl5.exe
+all: bin/fileio.exe bin/opengl1.exe bin/opengl2.exe bin/opengl3.exe bin/opengl4.exe bin/opengl5.exe
 
 
-rebuild: clean all
+rebuild: cleanest all
 
 
 
 bin/fileio.exe: fileio/*.cpp
 	$(CC) $(CFLAGS) fileio/*.cpp -o $@ $(LDFLAGS)
-
-
-bin/employee.exe: Employee/*.cpp
-	$(CC) $(CFLAGS) Employee/*.cpp -o $@ $(LDFLAGS)
 
 
 bin/opengl1.exe: opengl1/*.cpp
@@ -45,10 +41,17 @@ bin/opengl5.exe: opengl5/*.cpp
 	$(CC) $(CFLAGS) opengl5/*.cpp -o $@ $(LDFLAGS3)
 
 
-
 clean:
+	rm fileio/*.o
+	rm opengl1/*.o
+	rm opengl2/*.o
+	rm opengl3/*.o
+	rm opengl4/*.o
+	rm opengl5/*.o
+
+
+cleanest:
 	rm bin/fileio.exe
-	rm bin/employee.exe
 	rm bin/opengl1.exe
 	rm bin/opengl2.exe
 	rm bin/opengl3.exe

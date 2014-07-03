@@ -1,4 +1,4 @@
-#!/bin/make
+#!/bin/bash make
 
 
 
@@ -10,19 +10,15 @@ LDFLAGS3=-lSDL -lGL -lGLU
 
 
 
-all: bin/fileio bin/employee bin/opengl1 bin/opengl2 bin/opengl3 bin/opengl4 bin/opengl5
+all: bin/fileio bin/opengl1 bin/opengl2 bin/opengl3 bin/opengl4 bin/opengl5
 
 
-rebuild: clean all
+rebuild: cleanest all
 
 
 
 bin/fileio: fileio/*.cpp
 	$(CC) $(CFLAGS) fileio/*.cpp -o $@ $(LDFLAGS)
-
-
-bin/employee: Employee/*.cpp
-	$(CC) $(CFLAGS) Employee/*.cpp -o $@ $(LDFLAGS)
 
 
 bin/opengl1: opengl1/*.cpp
@@ -45,10 +41,17 @@ bin/opengl5: opengl5/*.cpp
 	$(CC) $(CFLAGS) opengl5/*.cpp -o $@ $(LDFLAGS3)
 
 
-
 clean:
+	rm fileio/*.o
+	rm opengl1/*.o
+	rm opengl2/*.o
+	rm opengl3/*.o
+	rm opengl4/*.o
+	rm opengl5/*.o
+
+
+cleanest:
 	rm bin/fileio
-	rm bin/employee
 	rm bin/opengl1
 	rm bin/opengl2
 	rm bin/opengl3
