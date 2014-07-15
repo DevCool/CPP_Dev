@@ -2,11 +2,12 @@
 
 
 
-CC=i686-w64-mingw32-g++
-CFLAGS=-O3 -Wall
-LDFLAGS=-static-libgcc -static-libstdc++
-LDFLAGS2=-lmingw32 -lSDLmain -lSDL
-LDFLAGS3=-lmingw32 -lSDLmain -lSDL -lopengl32 -lglu32
+CC=i586-mingw32msvc-g++
+CFLAGS=
+CFLAGS2=`/opt/SDL-1.2.13/bin/sdl-config --cflags`
+LDFLAGS=
+LDFLAGS2=`/opt/SDL-1.2.13/bin/sdl-config --libs`
+LDFLAGS3=`/opt/SDL-1.2.13/bin/sdl-config --libs` -lopengl32 -lglu32
 
 
 
@@ -22,23 +23,23 @@ bin/fileio.exe: fileio/*.cpp
 
 
 bin/opengl1.exe: opengl1/*.cpp
-	$(CC) $(CFLAGS) opengl1/*.cpp -o $@ $(LDFLAGS2)
+	$(CC) $(CFLAGS2) opengl1/*.cpp -o $@ $(LDFLAGS2)
 
 
 bin/opengl2.exe: opengl2/*.cpp
-	$(CC) $(CFLAGS) opengl2/*.cpp -o $@ $(LDFLAGS3)
+	$(CC) $(CFLAGS2) opengl2/*.cpp -o $@ $(LDFLAGS3)
 
 
 bin/opengl3.exe: opengl3/*.cpp
-	$(CC) $(CFLAGS) opengl3/*.cpp -o $@ $(LDFLAGS3)
+	$(CC) $(CFLAGS2) opengl3/*.cpp -o $@ $(LDFLAGS3)
 
 
 bin/opengl4.exe: opengl4/*.cpp
-	$(CC) $(CFLAGS) opengl4/*.cpp -o $@ $(LDFLAGS3)
+	$(CC) $(CFLAGS2) opengl4/*.cpp -o $@ $(LDFLAGS3)
 
 
 bin/opengl5.exe: opengl5/*.cpp
-	$(CC) $(CFLAGS) opengl5/*.cpp -o $@ $(LDFLAGS3)
+	$(CC) $(CFLAGS2) opengl5/*.cpp -o $@ $(LDFLAGS3)
 
 
 clean:
