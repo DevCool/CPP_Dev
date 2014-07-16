@@ -42,19 +42,19 @@ bin/opengl5: opengl5/*.cpp
 
 
 clean:
-	rm fileio/*.o
-	rm opengl1/*.o
-	rm opengl2/*.o
-	rm opengl3/*.o
-	rm opengl4/*.o
-	rm opengl5/*.o
+	rm -f fileio/*.o
+	rm -f opengl1/*.o
+	rm -f opengl2/*.o
+	rm -f opengl3/*.o
+	rm -f opengl4/*.o
+	rm -f opengl5/*.o
 
 
 cleanest:
-	rm bin/fileio
-	rm bin/opengl1
-	rm bin/opengl2
-	rm bin/opengl3
-	rm bin/opengl4
-	rm bin/opengl5
+	rm -f bin/fileio
+	rm -f bin/opengl1
+	rm -f bin/opengl2
+	rm -f bin/opengl3
+	rm -f bin/opengl4
+	rm -f bin/opengl5
 

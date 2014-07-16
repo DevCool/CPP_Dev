@@ -3,22 +3,63 @@
 ####################################################
 
 if [ -d "bin" ]; then
-	if [[ -e bin/fileio && -e bin/opengl1 && -e bin/opengl2 && -e bin/opengl3 && -e bin/opengl4 && -e bin/opengl5 ]]; then
+	if [[ -e bin/fileio && -e bin/opengl1 && -e bin/opengl2 && -e bin/opengl3 && -e bin/opengl4 && -e bin/opengl5 ]]
+	then
 		echo Files exist rebuilding...
 		make -f Makefile.linux rebuild
+		if [ $? -eq 0 ]
+		then
+			echo "Building linux binaries finished... with success."
+		else
+			echo "Building linux binaries finished.. failed."
+		fi
 	else
 		echo Files not found building...
 		make -f Makefile.linux all
+		if [ $? -eq 0 ]
+		then
+			echo "Building linux binaries finished... with success."
+		else
+			echo "Building linux binaries finished.. failed."
+		fi
 	fi
 
-	if [[ -e bin/fileio.exe && -e bin/opengl1.exe && -e bin/opengl2.exe && -e bin/opengl3.exe && -e bin/opengl4.exe && -e bin/opengl5.exe ]]; then
+	if [[ -e bin/fileio.exe && -e bin/opengl1.exe && -e bin/opengl2.exe && -e bin/opengl3.exe && -e bin/opengl4.exe && -e bin/opengl5.exe ]]
+	then
 		echo Win32 Files exist rebuilding...
 		make -f Makefile.win32 rebuild
+		if [ $? -eq 0 ]
+		then
+			echo "Building windows binaries finished... with success."
+		else
+			echo "Building windows binaries finished.. failed."
+		fi
 	else
 		echo Win32 Files not found building...
 		make -f Makefile.win32 all
+		if [ $? -eq 0 ]
+		then
+			echo "Building windows binaries finished... with success."
+		else
+			echo "Building windows binaries finished.. failed."
+		fi
 	fi
 else
 	mkdir bin
-fi
 
+	make -f Makefile.linux all
+	if [ $? -eq 0 ]
+	then
+		echo "Building linux binaries finished... with success."
+	else
+		echo "Building linux binaries finished.. failed."
+	fi
+
+	make -f Makefile.win32 all
+	if [ $? -eq 0 ]
+	then
+		echo "Building windows binaries finished... with success."
+	else
+		echo "Building windows binaries finished.. failed."
+	fi
+fi
