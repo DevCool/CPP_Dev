@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="zShooter" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="zShooter" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDLmain -lSDL -lSDL_mixer -lopengl32 -lglu32" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="zShooter" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-w" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lSDLmain -lSDL -lSDL_mixer -lopengl32 -lglu32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="camera.cpp" />
+		<Unit filename="camera.h" />
+		<Unit filename="collision.cpp" />
+		<Unit filename="collision.h" />
+		<Unit filename="collisionplane.cpp" />
+		<Unit filename="collisionplane.h" />
+		<Unit filename="collisionsphere.cpp" />
+		<Unit filename="collisionsphere.h" />
+		<Unit filename="functions.cpp" />
+		<Unit filename="functions.h" />
+		<Unit filename="game.cpp" />
+		<Unit filename="game.h" />
+		<Unit filename="item.cpp" />
+		<Unit filename="item.h" />
+		<Unit filename="knife.cpp" />
+		<Unit filename="knife.h" />
+		<Unit filename="level.cpp" />
+		<Unit filename="level.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="main.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="menu.cpp" />
+		<Unit filename="menu.h" />
+		<Unit filename="object.cpp" />
+		<Unit filename="object.h" />
+		<Unit filename="objloader.cpp" />
+		<Unit filename="objloader.h" />
+		<Unit filename="pengine.cpp" />
+		<Unit filename="pengine.h" />
+		<Unit filename="player.cpp" />
+		<Unit filename="player.h" />
+		<Unit filename="skybox.cpp" />
+		<Unit filename="skybox.h" />
+		<Unit filename="text.cpp" />
+		<Unit filename="text.h" />
+		<Unit filename="vector.cpp" />
+		<Unit filename="vector.h" />
+		<Unit filename="weapon.cpp" />
+		<Unit filename="weapon.h" />
+		<Unit filename="zombie.cpp" />
+		<Unit filename="zombie.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

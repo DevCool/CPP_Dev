@@ -1,0 +1,9 @@
+Zombie Shooter v0.95
+
+Current Changes:
+
+	Just added a makefile
+
+	Modified the collision for the gun/zombie.. to make it so
+	you don't end up shooting two or three at once.
+

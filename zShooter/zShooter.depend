@@ -1,0 +1,118 @@
+# depslib dependency file v1.0
+1408770304 source:c:\users\philip\documents\projects\zshooter\camera.cpp
+	"camera.h"
+
+1408767633 c:\users\philip\documents\projects\zshooter\camera.h
+
+1408661352 c:\users\philip\documents\projects\zshooter\vector.h
+
+1408661353 source:c:\users\philip\documents\projects\zshooter\collision.cpp
+	"collision.h"
+
+1408661352 c:\users\philip\documents\projects\zshooter\collision.h
+	"vector.h"
+
+1408661353 source:c:\users\philip\documents\projects\zshooter\collisionplane.cpp
+	"collisionplane.h"
+
+1408661352 c:\users\philip\documents\projects\zshooter\collisionplane.h
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\collisionsphere.cpp
+	"collisionsphere.h"
+
+1408661352 c:\users\philip\documents\projects\zshooter\collisionsphere.h
+	"vector.h"
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\functions.cpp
+
+1408507716 c:\users\philip\documents\projects\zshooter\functions.h
+	<SDL/SDL.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<cstdlib>
+	<vector>
+	<string>
+	<algorithm>
+	<fstream>
+	<cstdio>
+	<iostream>
+	<cmath>
+	"objloader.h"
+	"vector.h"
+
+1408661352 c:\users\philip\documents\projects\zshooter\objloader.h
+	<SDL/SDL.h>
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\item.cpp
+	"item.h"
+
+1408661352 c:\users\philip\documents\projects\zshooter\item.h
+
+1408661353 source:c:\users\philip\documents\projects\zshooter\knife.cpp
+	"knife.h"
+
+1408661352 c:\users\philip\documents\projects\zshooter\knife.h
+
+1408768391 c:\users\philip\documents\projects\zshooter\player.h
+
+1408661352 c:\users\philip\documents\projects\zshooter\weapon.h
+
+1408903329 c:\users\philip\documents\projects\zshooter\zombie.h
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\level.cpp
+	"level.h"
+
+1408661352 c:\users\philip\documents\projects\zshooter\level.h
+
+1408661352 c:\users\philip\documents\projects\zshooter\skybox.h
+
+1408661352 c:\users\philip\documents\projects\zshooter\object.h
+
+1408717537 source:c:\users\philip\documents\projects\zshooter\main.cpp
+	"game.h"
+
+1408771443 c:\users\philip\documents\projects\zshooter\game.h
+
+1408661352 c:\users\philip\documents\projects\zshooter\menu.h
+	<GL/gl.h>
+
+1408661352 c:\users\philip\documents\projects\zshooter\text.h
+	<SDL/SDL.h>
+
+1408661352 c:\users\philip\documents\projects\zshooter\pengine.h
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\menu.cpp
+	"menu.h"
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\object.cpp
+	"object.h"
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\objloader.cpp
+	"objloader.h"
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\pengine.cpp
+	"pengine.h"
+
+1408771347 source:c:\users\philip\documents\projects\zshooter\player.cpp
+	"player.h"
+
+1408661353 source:c:\users\philip\documents\projects\zshooter\skybox.cpp
+	"skybox.h"
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\text.cpp
+	"text.h"
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\vector.cpp
+	"vector.h"
+
+1408661352 source:c:\users\philip\documents\projects\zshooter\weapon.cpp
+	"weapon.h"
+
+1408903469 source:c:\users\philip\documents\projects\zshooter\zombie.cpp
+	"zombie.h"
+
+1408903348 source:c:\users\philip\documents\projects\zshooter\game.cpp
+	"game.h"
+
+1408771708 source:c:\users\philip\documents\projects\zshooter\main.rc
+

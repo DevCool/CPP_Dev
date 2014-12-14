@@ -1,0 +1,63 @@
+# Blender MTL File: 'ak472.blend'
+# Material Count: 6
+newmtl Material.001
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.539085 0.459482 0.018929
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material.002
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.269933 0.264683 0.264683
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material.003
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.292363 0.259354 0.259354
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+
+
+newmtl Material_AK47.TGA_Cube.001-k.t
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd AK47.TGA_Cube.001-k.bmp
+
+
+newmtl _ak47-clip_Cube.002-k.
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd ak47-clip_Cube.002-k.bmp
+
+
+newmtl _ak47-hand_Cube.001-k.
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd ak47-hand_Cube.001-k.bmp
+
+
