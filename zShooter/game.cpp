@@ -259,7 +259,7 @@ void game::update()
         {
             for(unsigned int i=0; i<zombies.size(); i++)
             {
-                if(collision::raysphere(zombies[i].getSphere()->center.x,zombies[i].getSphere()->center.y,zombies[i].getSphere()->center.z,direction.x,direction.y,direction.z,player1->cam.getLocation().x,player1->cam.getLocation().y,player1->cam.getLocation().z,1.0))
+                if(collision::raysphere(zombies[i].getSphere()->center.x,zombies[i].getSphere()->center.y,zombies[i].getSphere()->center.z,direction.x,direction.y,direction.z,player1->cam.getLocation().x,player1->cam.getLocation().y,player1->cam.getLocation().z,0.95))
                 {
                     std::cout << "collision\n" << zombies[i].getSphere()->center.x << "\t" << zombies[i].getSphere()->center.y << "\t" << zombies[i].getSphere()->center.z << std::endl << direction;
                     zombies[i].decreaseHealth(player1->getCurWeapon()->getStrength());
