@@ -4,6 +4,8 @@
 ===============================================================
 
 gamefw - My game framework code for linux opengl. 3D FPS games.
+         Modified somewhat from InitWithData (youtube.com), his
+         tutorial.
 
 ===============================================================
 
