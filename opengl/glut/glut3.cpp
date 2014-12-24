@@ -10,18 +10,39 @@
 #include <GL/glut.h>
 #endif
 
+//Menu IDs
+/*
+#define RED 1
+#define GREEN 2
+#define BLUE 3
+#define ORANGE 4
+#define SWITCH_OFF 5
+*/
+// Misc Variables
+//float red=0.0f,green=0.0f,blue=0.0f;
+//bool colorMode=false;
+
 // Camera Variables
-float angle=0.0;
+float angleX=0.0f;//,angleY=0.0f;
 float lx=0.0f,lz=-1.0f;
 float x=0.0f,z=0.0f;
 
+// KeyState Variables
+float deltaAngleX=0.0f;//,deltaAngleY=0.0f;
+float deltaMove=0.0f;
+int xOrigin=-1;
+
+//void processMenuEvents(int option);
 void pressKey(int key,int xx,int yy);
 void releaseKey(int key,int x,int y);
 void computePos(float pos);
-void computeDir(float dir);
+//void computeDir(float dir);
+void mouseButton(int button,int state,int x,int y);
+void mouseMove(int x,int y);
 void updateMovement(void);
 void updateScene(void);
 void drawSnowman(void);
+//int createGLUTMenus(void);
 void display(void);
 void reshape(int w,int h);
 void keyboard(unsigned char key,int x,int y);
@@ -46,11 +67,16 @@ int main(int argc,char** args)
 	glutSpecialFunc(pressKey);
 	glutSpecialUpFunc(releaseKey);
 
+	glutMouseFunc(mouseButton);
+	glutMotionFunc(mouseMove);
+	//int menuRes=createGLUTMenus();
+
 	// OpenGL init
 	glEnable(GL_DEPTH_TEST);
 
 	// Enter GLUT mainloop
 	glutMainLoop();
+	//glutDestroyMenu(menuRes);
 	
 	return 1;
 }
@@ -73,29 +99,102 @@ void computePos(float deltaMove)
 	z+=deltaMove*lz*0.1f;
 }
 
+/*
 void computeDir(float deltaAngle)
 {
 	angle+=deltaAngle;
 	lx=sin(angle);
 	lz=-cos(angle);
 }
+*/
 
-// KeyState Variables
-float deltaAngle=0.0f;
-float deltaMove=0.0f;
+void mouseButton(int button,int state,int x,int y)
+{
+	if(button==GLUT_LEFT_BUTTON)
+	{
+		if(state==GLUT_UP)
+		{
+			angleX+=deltaAngleX;
+			xOrigin=-1;
+		}
+		else
+			xOrigin=x;
+	}
+}
+
+void mouseMove(int x,int y)
+{
+	if(xOrigin>=0)
+	{
+		deltaAngleX=(x-xOrigin)*0.001f;
+		lx=sin(angleX+deltaAngleX);
+		lz=-cos(angleX+deltaAngleX);
+	}
+}
 
 void updateMovement(void)
 {
 	if (deltaMove)
 		computePos(deltaMove);
-	if (deltaAngle)
-		computeDir(deltaAngle);
 }
 
 void updateScene(void)
 {
 	// Update the displayed scene here
 }
+
+
+/*
+int createGLUTMenus()
+{
+	int menu1;
+	menu1=glutCreateMenu(processMenuEvents);
+
+	glutAddMenuEntry("Red",RED);
+	glutAddMenuEntry("Blue",BLUE);
+	glutAddMenuEntry("Green",GREEN);
+	glutAddMenuEntry("Orange",ORANGE);
+	glutAddMenuEntry("Off",SWITCH_OFF);
+
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+	return menu1;
+}
+
+void processMenuEvents(int option)
+{
+	switch(option)
+	{
+		case RED:
+			red=1.0f;
+			green=0.0f;
+			blue=0.0f;
+			colorMode=true;
+		break;
+		case GREEN:
+			red=0.0f;
+			green=1.0f;
+			blue=0.0f;
+			colorMode=true;
+		break;
+		case BLUE:
+			red=0.0f;
+			green=0.0f;
+			blue=1.0f;
+			colorMode=true;
+		break;
+		case ORANGE:
+			red=1.0f;
+			green=0.5f;
+			blue=0.5f;
+			colorMode=true;
+		break;
+		case SWITCH_OFF:
+			colorMode=false;
+		break;
+	}
+}
+*/
+
 
 void display(void)
 {
@@ -127,6 +226,11 @@ void display(void)
 	updateMovement();
 	updateScene();
 
+//	if(colorMode)
+//		glColorMask(red,green,blue,1.0f);
+//	else
+//		glColorMask(1.0f,1.0f,1.0f,1.0f);
+
 	glutSwapBuffers();
 }
 
@@ -143,16 +247,6 @@ void specialKeys(int key,int x,int y)
 
 	switch(key)
 	{
-		case GLUT_KEY_LEFT:
-			angle-=0.01f;
-			lx=sin(angle);
-			lz=-cos(angle);
-		break;
-		case GLUT_KEY_RIGHT:
-			angle+=0.01f;
-			lx=sin(angle);
-			lz=-cos(angle);
-		break;
 		case GLUT_KEY_UP:
 			x+=lx*fraction;
 			z+=lz*fraction;
@@ -169,8 +263,8 @@ void pressKey(int key,int xx,int yy)
 {
 	switch(key)
 	{
-		case GLUT_KEY_LEFT: deltaAngle=-0.01f; break;
-		case GLUT_KEY_RIGHT: deltaAngle=0.01f; break;
+		//case GLUT_KEY_LEFT: deltaAngle=-0.01f; break;
+		//case GLUT_KEY_RIGHT: deltaAngle=0.01f; break;
 		case GLUT_KEY_UP: deltaMove=0.5f; break;
 		case GLUT_KEY_DOWN: deltaMove=-0.5f; break;
 	}
@@ -180,8 +274,8 @@ void releaseKey(int key,int x,int y)
 {
 	switch(key)
 	{
-		case GLUT_KEY_LEFT:
-		case GLUT_KEY_RIGHT: deltaAngle=0.0f; break;
+		//case GLUT_KEY_LEFT:
+		//case GLUT_KEY_RIGHT: deltaAngle=0.0f; break;
 		case GLUT_KEY_UP:
 		case GLUT_KEY_DOWN: deltaMove=0.0f; break;
 	}
