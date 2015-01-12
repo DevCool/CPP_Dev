@@ -37,11 +37,13 @@ public:
     bool update(std::vector<collisionplane>&,vector3d);
     void show();
     collisionsphere* getSphere();
+//	void setLoc(vector3d loc);
     void setLocation(vector3d& loc);
     bool setAttack(collisionsphere playerloc);
     void decreaseHealth(int num);
     int getHealth();
     int getStrength();
+	bool hasCollided(zombie z);
     float distanceBetweenToPoints(vector3d enemyloc,vector3d playerloc);
     bool isDead();
     void del();

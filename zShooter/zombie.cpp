@@ -172,10 +172,24 @@ bool zombie::isDead()
     return isdead;
 }
 
-void zombie::del()
+/* void zombie::del()
 {
     glDeleteLists(frames[walk+attack+die-1], 1);
-}
+} */
+
+/* bool zombie::hasCollided(zombie z)
+{
+	if (z.getSphere()->center == getSphere()->center)
+		z.setLoc(vector3d(z.getSphere()->center.x+1.0,z.getSphere()->center.y,z.getSphere()->center.z+1.25));
+	else
+		return false;
+	return true;
+} */
+
+/*void zombie::setLoc(vector3d loc)
+{
+	cs.center=loc;
+}*/
 
 bool zombie::hasDied()
 {

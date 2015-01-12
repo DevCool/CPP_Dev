@@ -249,6 +249,12 @@ void game::update()
             zombies.erase(zombies.begin()+i);
             zombies.insert(zombies.begin()+i,zombie(100,0.1,1,collisionsphere(*levels[0].getRandomSpawnPoint(),2.0),vector3d(0,0,0),player1->cam.getLocation()));
         }
+/*		for(unsigned int j=0; j<k; j++)
+		{
+			bool res=zombies[i].hasCollided(zombies[j]);
+			if(res)
+				std::cout << "Zombie Collided" << std::endl;
+		} */
     }
     if(isfired)
     {
@@ -259,7 +265,7 @@ void game::update()
         {
             for(unsigned int i=0; i<zombies.size(); i++)
             {
-                if(collision::raysphere(zombies[i].getSphere()->center.x,zombies[i].getSphere()->center.y,zombies[i].getSphere()->center.z,direction.x,direction.y,direction.z,player1->cam.getLocation().x,player1->cam.getLocation().y,player1->cam.getLocation().z,0.95))
+                if(collision::raysphere(zombies[i].getSphere()->center.x,zombies[i].getSphere()->center.y,zombies[i].getSphere()->center.z,direction.x,direction.y,direction.z,player1->cam.getLocation().x,player1->cam.getLocation().y,player1->cam.getLocation().z,0.9))
                 {
                     std::cout << "collision\n" << zombies[i].getSphere()->center.x << "\t" << zombies[i].getSphere()->center.y << "\t" << zombies[i].getSphere()->center.z << std::endl << direction;
                     zombies[i].decreaseHealth(player1->getCurWeapon()->getStrength());
@@ -323,8 +329,9 @@ void game::show()
     player1->getCamera()->update();
     glEnable(GL_DEPTH_TEST);
     levels[0].show();
-    for(int i=0; i<zombies.size(); i++)
-        zombies[i].show();
+    for(int i=0; i<zombies.size(); i++) {
+        zombies[i].show ();
+    }
     object.show();
     glLoadIdentity();
     player1->show();
@@ -488,7 +495,6 @@ void game::drawMenu(int health,int ammo,int allammo,int point,std::string& weapo
     sprintf(tmp,"SCORE: %d",point);
     tex->drawText(vector3d(0.22,0.35,-1),vector3d(0,0,0),vector3d(0.035,0.035,0.035),tmp);
 }
-
 
 bool game::addToplist(int point,const char* name)
 {

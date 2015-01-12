@@ -59,7 +59,7 @@ class game
     vector3d direction;
     vector3d startpoint;
     vector3d camdirection;
-    static const int FPS=30;
+    static const int FPS=60;
     bool isshot;
     bool isgod;
     std::vector<map> levels;
