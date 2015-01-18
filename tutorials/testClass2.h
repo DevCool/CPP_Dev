@@ -7,7 +7,6 @@ class testClass2 : public testClass
 {
 	public:
 		testClass2 ();
-		~testClass2 ();
 
 		bool loadMedia (void);
 		int start (const char *sTitle, int nPosX, int nPosY, int nWidth, int nHeight, Uint32 uFlags);

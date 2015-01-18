@@ -7,10 +7,6 @@ testClass2::testClass2 ()
 	image = NULL;
 }
 
-testClass2::~testClass2 ()
-{
-}
-
 bool testClass2::loadMedia ()
 {
 	bool success = true;
@@ -35,9 +31,21 @@ int testClass2::start (const char *sTitle, int nPosX, int nPosY, int nWidth, int
 			printf ("Failed to initialize...\n");
 		}
 		else {
-			SDL_BlitSurface (image, NULL, screen, NULL);
-			SDL_UpdateWindowSurface (window);
-			SDL_Delay(5000);
+			bool quit = false;
+
+			// Event handler
+			SDL_Event e;
+
+			// While app running
+			while (!quit) {
+				while (SDL_PollEvent (&e) != 0) {
+					if (e.type == SDL_QUIT)
+						quit = true;
+				}
+
+				SDL_BlitSurface (image, NULL, screen, NULL);
+				SDL_UpdateWindowSurface (window);
+			}
 		}
 	}
 

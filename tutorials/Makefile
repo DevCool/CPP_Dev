@@ -3,7 +3,7 @@ CFLAGS=-O2
 CFLAGS2=-c -Wall
 LDFLAGS=-lSDL2main -lSDL2
 
-all: clean tut1 tut2 clean2
+all: clean tut1 tut2 tut3 clean2
 
 tut1: tut1.o testClass.o
 	$(CC) $(CFLAGS) tut1.o testClass.o -o $@ $(LDFLAGS)
@@ -23,8 +23,17 @@ tut2.o: tut2.cpp
 testClass2.o: testClass2.cpp
 	$(CC) $(CFLAGS2) testClass2.cpp
 
+tut3: tut3.o testClass.o testClass3.o
+	$(CC) $(CFLAGS) tut3.o testClass.o testClass3.o -o $@ $(LDFLAGS)
+
+tut3.o: tut3.cpp
+	$(CC) $(CFLAGS2) tut3.cpp
+
+testClass3.o: testClass3.cpp
+	$(CC) $(CFLAGS2) testClass3.cpp
+
 clean:
-	rm -f *.o tut1 tut2
+	rm -f *.o tut1 tut2 tut3
 
 clean2:
 	rm -f *.o
