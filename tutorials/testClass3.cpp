@@ -44,14 +44,52 @@ int testClass3::start (const char *title, int x, int y, int w, int h, Uint32 fla
 			bool quit = false;
 			SDL_Event e;
 
+			image = images [ KEY_PRESS_SURFACE_DEFAULT ];
+
 			while (!quit) {
 				while (SDL_PollEvent (&e) != 0) {
 					if (e.type == SDL_QUIT) {
 						quit = true;
 					}
+					else if (e.type == SDL_KEYDOWN) {
+						switch (e.key.keysym.sym)
+						{
+							case SDLK_UP:
+								image = images[ KEY_PRESS_SURFACE_UP ];
+							break;
+
+							case SDLK_DOWN:
+								image = images[ KEY_PRESS_SURFACE_DOWN ];
+							break;
+
+							case SDLK_LEFT:
+								image = images[ KEY_PRESS_SURFACE_LEFT ];
+							break;
+
+							case SDLK_RIGHT:
+								image = images[ KEY_PRESS_SURFACE_RIGHT ];
+							break;
+
+							default:
+								break;
+						}
+					}
+					else if (e.type == SDL_KEYUP) {
+						switch (e.key.keysym.sym)
+						{
+							case SDLK_ESCAPE:
+								quit = true;
+							break;
+
+							default:
+								break;
+						}
+
+						image = images[ KEY_PRESS_SURFACE_DEFAULT ];
+					}
 				}
 
-				SDL_BlitSurface (images[KEY_PRESS_SURFACE_DEFAULT], NULL, screen, NULL);
+				SDL_BlitSurface (image, NULL, screen, NULL);
 				SDL_UpdateWindowSurface (window);
 			}
 		}
