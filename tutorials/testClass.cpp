@@ -7,34 +7,6 @@ testClass::testClass()
 	image = NULL;
 }
 
-testClass::~testClass()
-{
-}
-
-bool testClass::init(const char *sTitle, int x, int y, int nScreenWidth, int nScreenHeight, Uint32 uFlags)
-{
-	bool success = true;
-
-	printf ("Initializing please wait... (this may take awhile).\n");
-
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("Sorry but cannot init SDL2.\nSDL Error: %s\n", SDL_GetError());
-		success = false;
-	}
-	else {
-		window = SDL_CreateWindow(sTitle, x, y, nScreenWidth, nScreenHeight, uFlags);
-		if (window == NULL) {
-			printf ("Sorry cannot create the main app window.\nSDL Error: %s\n", SDL_GetError());
-			success = false;
-		}
-		else {
-			screen = SDL_GetWindowSurface(window);
-		}
-	}
-
-	return success;
-}
-
 bool testClass::loadMedia()
 {
 	bool success = true;

@@ -1,24 +1,17 @@
 #ifndef _TESTCLASS_H_
 #define _TESTCLASS_H_
 
-#include <cstdio>
-#include <cstdlib>
-#include <SDL2/SDL.h>
+#include "initClass.h"
 
-class testClass {
+class testClass : public initClass
+{
 	public:
-		SDL_Window* window;
-		SDL_Surface *screen, *image;
+		SDL_Surface *image;
 
-		bool init(const char *sTitle, int x, int y, int nScreenWidth, int nScreenHeight, Uint32 uFlags);
-
-	public:
 		testClass();
-		~testClass();
-
-		virtual bool loadMedia();
-		virtual int start(const char *sTitle, int x, int y, int nScreenWidth, int nScreenHeight, Uint32 uFlags);
-		virtual void close();
+		bool loadMedia();
+		int start(const char *sTitle, int x, int y, int nScreenWidth, int nScreenHeight, Uint32 uFlags);
+		void close();
 };
 
 #endif
