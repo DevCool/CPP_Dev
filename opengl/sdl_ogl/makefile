@@ -12,4 +12,4 @@ clean:
 	rm -f *.o $(EXES)
 
 clean_garbage:
-	rm -f *.o
+	rm -f *.o *~

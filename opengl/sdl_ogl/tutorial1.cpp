@@ -57,10 +57,10 @@ void display() {
 	glBegin(GL_POLYGON);
 		// front
 		glColor3f(1.0, 0.0, 0.0);
-		glVertex3f(1.0, 1.0, 0.0);
-		glVertex3f(-1.0, 1.0, 0.0);
-		glVertex3f(-1.0, -1.0, 0.0);
-		glVertex3f(1.0, -1.0, 0.0);
+		glVertex3f(1.0, 1.0, -1.0);
+		glVertex3f(-1.0, 1.0, -1.0);
+		glVertex3f(-1.0, -1.0, -1.0);
+		glVertex3f(1.0, -1.0, -1.0);
 	glEnd();
 
 	glBegin(GL_POLYGON);
@@ -76,35 +76,35 @@ void display() {
 		// side 1
 		glColor3f(0.0, 1.0, 1.0);
 		glVertex3f(1.0, 1.0, 1.0);
-		glVertex3f(1.0, 1.0, 0.0);
-		glVertex3f(1.0, -1.0, 0.0);
+		glVertex3f(1.0, 1.0, -1.0);
+		glVertex3f(1.0, -1.0, -1.0);
 		glVertex3f(1.0, -1.0, 1.0);
 	glEnd();
 
 	glBegin(GL_POLYGON);
 		// side 2
 		glColor3f(1.0, 1.0, 0.0);
-		glVertex3f(-1.0, 1.0, 0.0);
+		glVertex3f(-1.0, 1.0, -1.0);
 		glVertex3f(-1.0, 1.0, 1.0);
 		glVertex3f(-1.0, -1.0, 1.0);
-		glVertex3f(-1.0, -1.0, 0.0);
+		glVertex3f(-1.0, -1.0, -1.0);
 	glEnd();
 
 	glBegin(GL_POLYGON);
 		// top
 		glColor3f(0.5, 0.4, 0.7);
-		glVertex3f(1.0, 1.0, 0.0);
+		glVertex3f(1.0, 1.0, -1.0);
 		glVertex3f(1.0, 1.0, 1.0);
 		glVertex3f(-1.0, 1.0, 1.0);
-		glVertex3f(-1.0, 1.0, 0.0);
+		glVertex3f(-1.0, 1.0, -1.0);
 	glEnd();
 
 	glBegin(GL_POLYGON);
 		// bottom
 		glColor3f(0.2, 1.0, 0.0);
 		glVertex3f(-1.0, -1.0, 1.0);
-		glVertex3f(-1.0, -1.0, 0.0);
-		glVertex3f(1.0, -1.0, 0.0);
+		glVertex3f(-1.0, -1.0, -1.0);
+		glVertex3f(1.0, -1.0, -1.0);
 		glVertex3f(1.0, -1.0, 1.0);
 	glEnd();
 	glFlush();
@@ -116,6 +116,7 @@ void display() {
 int main(int argc, char *args[]) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	screen = SDL_SetVideoMode(width, height, 32, SDL_SWSURFACE|SDL_OPENGL);
+	SDL_WM_SetCaption("SDL/OpenGL Tutorial 1", NULL);
 	bool running = true;
 	Uint32 start;
 	SDL_Event event;
