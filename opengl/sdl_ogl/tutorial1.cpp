@@ -10,6 +10,8 @@
 
 SDL_Surface* screen;
 
+const int cube = 1;
+
 int width = 800;
 int height = 600;
 float angle = 0.0;
@@ -27,6 +29,62 @@ void initGL() {
 	glLoadIdentity();
 
 	glEnable(GL_DEPTH_TEST);
+
+	glNewList(cube, GL_COMPILE);
+		glBegin(GL_POLYGON);
+			// front
+			glColor3f(1.0, 0.0, 0.0);
+			glVertex3f(1.0, 1.0, -1.0);
+			glVertex3f(-1.0, 1.0, -1.0);
+			glVertex3f(-1.0, -1.0, -1.0);
+			glVertex3f(1.0, -1.0, -1.0);
+		glEnd();
+
+		glBegin(GL_POLYGON);
+			// back
+			glColor3f(1.0, 0.0, 1.0);
+			glVertex3f(1.0, 1.0, 1.0);
+			glVertex3f(-1.0, 1.0, 1.0);
+			glVertex3f(-1.0, -1.0, 1.0);
+			glVertex3f(1.0, -1.0, 1.0);
+		glEnd();
+
+		glBegin(GL_POLYGON);
+			// side 1
+			glColor3f(0.0, 1.0, 1.0);
+			glVertex3f(1.0, 1.0, 1.0);
+			glVertex3f(1.0, 1.0, -1.0);
+			glVertex3f(1.0, -1.0, -1.0);
+			glVertex3f(1.0, -1.0, 1.0);
+		glEnd();
+
+		glBegin(GL_POLYGON);
+			// side 2
+			glColor3f(1.0, 1.0, 0.0);
+			glVertex3f(-1.0, 1.0, -1.0);
+			glVertex3f(-1.0, 1.0, 1.0);
+			glVertex3f(-1.0, -1.0, 1.0);
+			glVertex3f(-1.0, -1.0, -1.0);
+		glEnd();
+
+		glBegin(GL_POLYGON);
+			// top
+			glColor3f(0.5, 0.4, 0.7);
+			glVertex3f(1.0, 1.0, -1.0);
+			glVertex3f(1.0, 1.0, 1.0);
+			glVertex3f(-1.0, 1.0, 1.0);
+			glVertex3f(-1.0, 1.0, -1.0);
+		glEnd();
+
+		glBegin(GL_POLYGON);
+			// bottom
+			glColor3f(0.2, 1.0, 0.0);
+			glVertex3f(-1.0, -1.0, 1.0);
+			glVertex3f(-1.0, -1.0, -1.0);
+			glVertex3f(1.0, -1.0, -1.0);
+			glVertex3f(1.0, -1.0, 1.0);
+		glEnd();
+	glEndList();
 }
 
 void resizeGL(int width, int height) {
@@ -54,59 +112,7 @@ void display() {
 
 	glRotatef(angle, 1.0, 0.0, 0.0);
 	glPushMatrix();
-	glBegin(GL_POLYGON);
-		// front
-		glColor3f(1.0, 0.0, 0.0);
-		glVertex3f(1.0, 1.0, -1.0);
-		glVertex3f(-1.0, 1.0, -1.0);
-		glVertex3f(-1.0, -1.0, -1.0);
-		glVertex3f(1.0, -1.0, -1.0);
-	glEnd();
-
-	glBegin(GL_POLYGON);
-		// back
-		glColor3f(1.0, 0.0, 1.0);
-		glVertex3f(1.0, 1.0, 1.0);
-		glVertex3f(-1.0, 1.0, 1.0);
-		glVertex3f(-1.0, -1.0, 1.0);
-		glVertex3f(1.0, -1.0, 1.0);
-	glEnd();
-
-	glBegin(GL_POLYGON);
-		// side 1
-		glColor3f(0.0, 1.0, 1.0);
-		glVertex3f(1.0, 1.0, 1.0);
-		glVertex3f(1.0, 1.0, -1.0);
-		glVertex3f(1.0, -1.0, -1.0);
-		glVertex3f(1.0, -1.0, 1.0);
-	glEnd();
-
-	glBegin(GL_POLYGON);
-		// side 2
-		glColor3f(1.0, 1.0, 0.0);
-		glVertex3f(-1.0, 1.0, -1.0);
-		glVertex3f(-1.0, 1.0, 1.0);
-		glVertex3f(-1.0, -1.0, 1.0);
-		glVertex3f(-1.0, -1.0, -1.0);
-	glEnd();
-
-	glBegin(GL_POLYGON);
-		// top
-		glColor3f(0.5, 0.4, 0.7);
-		glVertex3f(1.0, 1.0, -1.0);
-		glVertex3f(1.0, 1.0, 1.0);
-		glVertex3f(-1.0, 1.0, 1.0);
-		glVertex3f(-1.0, 1.0, -1.0);
-	glEnd();
-
-	glBegin(GL_POLYGON);
-		// bottom
-		glColor3f(0.2, 1.0, 0.0);
-		glVertex3f(-1.0, -1.0, 1.0);
-		glVertex3f(-1.0, -1.0, -1.0);
-		glVertex3f(1.0, -1.0, -1.0);
-		glVertex3f(1.0, -1.0, 1.0);
-	glEnd();
+	glCallList(cube);
 	glFlush();
 	glPopMatrix();
 
