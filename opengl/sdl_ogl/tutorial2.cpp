@@ -13,6 +13,53 @@ bool running;
 int width;
 int height;
 unsigned int fps;
+const int myCube = 1;
+
+void drawCube(float size) {
+	glBegin(GL_QUADS);
+		// front face
+		glColor3f(1.0, 0.0, 0.0);
+		glVertex3f(size/2, size/2, -size/2);
+		glVertex3f(-size/2, size/2, -size/2);
+		glVertex3f(-size/2, -size/2, -size/2);
+		glVertex3f(size/2, -size/2, -size/2);
+
+		// left face
+		glColor3f(0.0, 1.0, 0.0);
+		glVertex3f(-size/2, size/2, -size/2);
+		glVertex3f(-size/2, size/2, size/2);
+		glVertex3f(-size/2, -size/2, size/2);
+		glVertex3f(-size/2, -size/2, -size/2);
+
+		// right face
+		glColor3f(0.0, 0.0, 1.0);
+		glVertex3f(size/2, size/2, -size/2);
+		glVertex3f(size/2, -size/2, -size/2);
+		glVertex3f(size/2, -size/2, size/2);
+		glVertex3f(size/2, size/2, size/2);
+
+		// back face
+		glColor3f(1.0, 1.0, 0.0);
+		glVertex3f(size/2, size/2, size/2);
+		glVertex3f(-size/2, size/2, size/2);
+		glVertex3f(-size/2, -size/2, size/2);
+		glVertex3f(size/2, -size/2, size/2);
+
+		// top face
+		glColor3f(0.0, 1.0, 1.0);
+		glVertex3f(size/2, size/2, size/2);
+		glVertex3f(-size/2, size/2, size/2);
+		glVertex3f(-size/2, size/2, -size/2);
+		glVertex3f(size/2, size/2, -size/2);
+
+		// bottom face
+		glColor3f(0.5, 1.0, 0.1);
+		glVertex3f(size/2, -size/2, -size/2);
+		glVertex3f(size/2, -size/2, size/2);
+		glVertex3f(-size/2, -size/2, size/2);
+		glVertex3f(-size/2, -size/2, -size/2);
+	glEnd();
+}
 
 void initWindow() {
 	glClearColor(0.1, 0.5, 1.0, 1.0);
@@ -22,18 +69,34 @@ void initWindow() {
 
 	glViewport(0, 0, width, height);
 	gluPerspective(45.0, (float)width/(float)height, 0.5, 1000.0);
-	gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	gluLookAt(0.0, 1.0, -10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 
 	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
 	glEnable(GL_DEPTH_TEST);
+
+	glNewList(myCube, GL_COMPILE);
+		drawCube(2);
+	glEndList();
 }
 
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
 
-	SDL_GL_SwapBuffers();
+	// The ground
+	glBegin(GL_QUADS);
+		glColor3f(1.0, 0.5, 0.5);
+		glVertex3f(50.0, 0.0, 50.0);
+		glVertex3f(-50.0, 0.0, 50.0);
+		glVertex3f(-50.0, 0.0, -50.0);
+		glVertex3f(50.0, 0.0, -50.0);
+	glEnd();
+
+	glPushMatrix();
+	glTranslatef(0.0, 1.0, 0.0);
+	glCallList(myCube);
+	glFlush();
+	glPopMatrix();
 }
 
 int main(int argc, char *args[]) {
@@ -62,6 +125,7 @@ int main(int argc, char *args[]) {
 		}
 
 		display();
+		SDL_GL_SwapBuffers();
 
 		if (fps > (SDL_GetTicks()-start)) SDL_Delay(fps > (SDL_GetTicks()-start));
 	}
