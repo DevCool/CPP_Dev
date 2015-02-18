@@ -13,7 +13,7 @@ tutorial2:
 	$(CC) $(CFLAGS) $@.cpp -o $@ $(LDFLAGS)
 
 tutorial3:
-	$(CC) $(CFLAGS) $@.cpp -o $@ $(LDFLAGS2)
+	$(CC) $(CFLAGS) $@.cpp functions.cpp -o $@ $(LDFLAGS2)
 
 clean:
 	rm -f *.o $(EXES)
