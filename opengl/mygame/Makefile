@@ -1,14 +1,20 @@
 OBJS=Main.o Application.o Camera.o
+EXECUTABLE=mygame
+CC=g++ -g
+CXX=$(CC)
+CFLAGS=-std=c++11 -O2 -Wall -g
+CXXFLAGS=$(CFLAGS)
+LD=$(CXX)
 
-CFLAGS=-O2 -Wall -g
-LD=g++ -g
+all: $(EXECUTABLE) clean
 
-all: game
-
-game: $(OBJS)
-	$(LD) $(CFLAGS) $(OBJS) -o mygame `sdl-config --cflags --libs` -lGL -lGLU
+$(EXECUTABLE): $(OBJS)
+	$(LD) $(CFLAGS) $(OBJS) -o $@ `sdl-config --cflags --libs` -lGL -lGLU
 
 clean:
 	@echo Cleaning up...
-	@rm *.o mygame
+	@rm *.o
 	@echo Done.
+
+cleanest:
+	@rm $(EXECUTABLE)
