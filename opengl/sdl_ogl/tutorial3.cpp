@@ -134,11 +134,13 @@ void display() {
 	glEnd();
 
 	for(int i=0; i<5; i++) {
-		glPushMatrix();
-		glTranslatef(i*5.0, 1.0, 0.0);
-		glRotatef(angle, 1.0, 1.0, 0.0);
-		glCallList(CUBE_LIST);
-		glPopMatrix();
+		for(int j=0; j<10; j++) {
+			glPushMatrix();
+			glTranslatef(sin(i+j)*5.0, 1.0, cos(i+j)*5.0);
+			glRotatef(angle, 1.0, 1.0, 0.0);
+			glCallList(CUBE_LIST);
+			glPopMatrix();
+		}
 	}
 	glFlush();
 	SDL_GL_SwapBuffers();
