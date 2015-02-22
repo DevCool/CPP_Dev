@@ -1,9 +1,11 @@
-OBJS=Main.o Application.o
+OBJS=Main.o Application.o Camera.o
 
 CFLAGS=-O2 -Wall -g
 LD=g++ -g
 
-all: $(OBJS)
+all: game
+
+game: $(OBJS)
 	$(LD) $(CFLAGS) $(OBJS) -o mygame `sdl-config --cflags --libs` -lGL -lGLU
 
 clean:

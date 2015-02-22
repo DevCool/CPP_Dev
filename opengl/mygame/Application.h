@@ -1,22 +1,27 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#define		SCREEN_WIDTH		800
+#define		SCREEN_HEIGHT		600
+#define		GAME_FPS		60
+
 #include <iostream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 #include <SDL/SDL_image.h>
 
-#define		SCREEN_WIDTH		800
-#define		SCREEN_HEIGHT		600
-#define		GAME_FPS		60
+#include "Camera.h"
 
 using namespace std;
 
 class Application
 {
 	private:
-		bool _running;
+		float _angle;
+		bool _running, _mousein; // _tester;
+
 		SDL_Surface* _screen;
+		Camera* _camera;
 
 		Application();
 		~Application();
