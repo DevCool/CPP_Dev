@@ -1,0 +1,31 @@
+#Makefile Testing
+#Coded by Philip Simonson. (AKA DevCool)
+
+CC=i686-w64-mingw32-g++
+CXX=$(CC)
+CFLAGS=-std=c++11 -O2 -Wall
+CXXFLAGS=$(CFLAGS)
+LDFLAGS=-mwindows -lmingw32 -lopengl32 -lglu32 -lSDLmain -lSDL
+
+all: mygame.exe clean
+
+rebuild: cleanest all
+
+mygame.exe: Main.o Camera.o Application.o
+	$(CC) -o $@ Main.o Camera.o Application.o $(LDFLAGS)
+
+main.o:	Main.cpp
+	$(CC) $(CFLAGS) -c Main.cpp
+
+Application.o:	Application.cpp
+	$(CC) $(CFLAGS) -c Application.cpp
+
+Camera.o:	Camera.cpp
+	$(CC) $(CFLAGS) -c Camera.cpp
+
+clean:
+	rm *.o
+
+cleanest:
+	rm mygame.exe
+
