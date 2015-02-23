@@ -11,6 +11,7 @@
 #include <SDL/SDL_image.h>
 
 #include "Camera.h"
+#include "ObjLoader.h"
 
 using namespace std;
 
@@ -20,8 +21,11 @@ class Application
 		float _angle;
 		bool _running, _mousein; // _tester;
 
+		int _testObject;
 		SDL_Surface* _screen;
+
 		Camera* _camera;
+		ObjLoader* _objLoader;
 
 		Application();
 		~Application();

@@ -1,8 +1,12 @@
 #include "Application.h"
 
 Application::Application() {
-	_camera = &Camera::getCamera();
+	cout << "Main Application Started!" << endl;
 
+	_camera = &Camera::getCamera();
+	_objLoader = &ObjLoader::getObjectLoader();
+
+	_testObject = 0;
 	_running = true;
 	_mousein = false;
 //	_tester = true;
@@ -17,6 +21,10 @@ Application::~Application() {
 		_camera->destroyCamera();
 	}
 
+	if (_objLoader != NULL) {
+		_objLoader->destroyObjectLoader();
+	}
+
 	SDL_Quit();
 }
 
@@ -25,8 +33,6 @@ Application& Application::getApplication(void) {
 
 	if (myApp == NULL) {
 		myApp = new Application();
-
-		std::cout << "Create Main Application!" << endl;
 	}
 
 	return *myApp;
@@ -47,6 +53,8 @@ void Application::InitGL(void) {
 	gluPerspective(45.0, (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1, 1000.0);
 	glMatrixMode(GL_MODELVIEW);
 
+	_testObject = _objLoader->loadObject("./data/test.obj");
+
 	glClearDepth(1.0);
 	glEnable(GL_DEPTH_TEST);
 }
@@ -65,6 +73,8 @@ void Application::Render(void) {
 		glColor3f(1.0, 0.2, 0.5); glVertex3f(-50.0, 0.0, -50.0);
 		glColor3f(0.5, 1.0, 0.0); glVertex3f(50.0, 0.0, -50.0);
 	glEnd();
+
+	glCallList(_testObject);
 
 	SDL_GL_SwapBuffers();
 }

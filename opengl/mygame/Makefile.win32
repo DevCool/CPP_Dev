@@ -1,16 +1,16 @@
 #Coded by Philip Simonson. (AKA DevCool)
 
-OBJS=Main.o Application.o Camera.o
+OBJS=Main.o Application.o Camera.o ObjLoader.o
 EXECUTABLE=mygame.exe
-CC=i686-w64-mingw32-g++ -g
+CC=i686-w64-mingw32-g++
 CXX=$(CC)
-CFLAGS=-std=c++11 -O2 -Wall -g
+CFLAGS=-std=c++11 -O2 -Wall
 CXXFLAGS=$(CFLAGS)
 LD=$(CXX)
 
 all: $(EXECUTABLE) clean
 
-rebuild: cleanest $(EXECUTABLE)
+rebuild: cleanest all
 
 $(EXECUTABLE): $(OBJS)
 	$(LD) $(CFLAGS) $(OBJS) -o $@ -mwindows -lmingw32 -lopengl32 -lglu32 -lSDLmain -lSDL

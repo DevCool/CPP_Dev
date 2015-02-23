@@ -1,15 +1,19 @@
-OBJS=Main.o Application.o Camera.o
+#Coded by Philip Simonson. (AKA DevCool)
+
+OBJS=Main.o Application.o Camera.o ObjLoader.o
 EXECUTABLE=mygame
-CC=g++ -g
+CC=g++
 CXX=$(CC)
-CFLAGS=-std=c++11 -O2 -Wall -g
+CFLAGS=-std=c++11 -O2 -Wall
 CXXFLAGS=$(CFLAGS)
 LD=$(CXX)
 
 all: $(EXECUTABLE) clean
 
+rebuild: cleanest all
+
 $(EXECUTABLE): $(OBJS)
-	$(LD) $(CFLAGS) $(OBJS) -o $@ `sdl-config --cflags --libs` -lGL -lGLU
+	$(LD) $(CFLAGS) $(OBJS) -o $@ -lGL -lGLU -lSDLmain -lSDL
 
 clean:
 	@echo Cleaning up...
