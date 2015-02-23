@@ -55,8 +55,8 @@ void Application::InitGL(void) {
 
 	_testObject = _objLoader->loadObject("./data/test.obj");
 
-	glClearDepth(1.0);
 	glEnable(GL_DEPTH_TEST);
+	glClearDepth(1.0);
 }
 
 void Application::Render(void) {
