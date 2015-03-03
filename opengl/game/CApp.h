@@ -9,6 +9,8 @@
 
 using namespace std;
 
+#include "CObjLoader.h"
+
 #ifdef _TEST_GAME_
 #define			SCREEN_WIDTH			800
 #define			SCREEN_HEIGHT			600
@@ -48,6 +50,7 @@ private:
 protected:
 	SDL_Surface* screen;
 	int myCube1;
+	CObjLoader objLoader;
 
 };
 
