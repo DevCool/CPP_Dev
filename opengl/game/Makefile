@@ -1,4 +1,4 @@
-OBJS=CObjLoader.o CApp.o Main.o
+OBJS=CCamera.o CObjLoader.o CApp.o Main.o
 CFLAGS=-O2 -Wall
 CXXFLAGS=${CFLAGS}
 LD=g++

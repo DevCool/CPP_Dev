@@ -9,6 +9,7 @@ COLORS::COLORS(float r, float g, float b) {
 CApp::CApp(void) {
 	screen = NULL;
 	running = true;
+	mousein = false;
 	myColors.push_back(new colors(1.0, 0.0, 1.0));
 	myColors.push_back(new colors(0.0, 0.0, 1.0));
 	myColors.push_back(new colors(0.0, 1.0, 0.0));
@@ -40,6 +41,9 @@ int CApp::Start(int width, int height) {
 				if(event.type == SDL_QUIT) {
 					running = false;
 				}
+				else if(event.type == SDL_MOUSEBUTTONDOWN) {
+					mousein = true;
+				}
 				else if(event.type == SDL_KEYDOWN) {
 					KeyHandler();
 				}
@@ -70,7 +74,7 @@ void CApp::InitOpenGL(int width, int height) {
 	
 	glViewport(0, 0, width, height);
 	gluPerspective(45.0, (float)width/(float)height, 0.1, 1000.0);
-	gluLookAt(50.0, 20.0, -35.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+	//gluLookAt(25.0, 15.0, -25.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_DEPTH_TEST);
@@ -88,6 +92,10 @@ void CApp::Cleanup(void) {
 	
 	myColors.clear();
 	glDeleteLists(myCube1, 1);
+	
+	mousein = false;
+	SDL_ShowCursor(SDL_ENABLE);
+	
 	SDL_FreeSurface(screen);
 	SDL_Quit();
 }
@@ -95,15 +103,23 @@ void CApp::Cleanup(void) {
 void CApp::KeyHandler(void) {
 	keys = SDL_GetKeyState(NULL);
 	
-	if (keys[SDLK_ESCAPE]) {
+	if(keys[SDLK_ESCAPE]) {
 		running = false;
+	}
+	else if(keys[SDLK_p]) {
+		mousein = !mousein;
+		SDL_ShowCursor(SDL_ENABLE);
 	}
 }
 
 void CApp::Render(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	gluLookAt(objCamera.getCamX(), objCamera.getCamY(), objCamera.getCamZ(), objCamera.getCamX()+objCamera.getCamYaw(), objCamera.getCamY()+objCamera.getCamPitch(), objCamera.getCamZ()+objCamera.getCamYaw(), 0.0, 1.0, 0.0);
 	glLoadIdentity();
 	
+	objCamera.controlCamera(0.2, 0.2, mousein);
+	objCamera.updateCamera();
+		
 	glColor3f(myColors[2]->red, myColors[2]->green, myColors[2]->blue);
 	for(float i = -50; i < 50; i += 1) {
 		glBegin(GL_LINES);
@@ -117,28 +133,31 @@ void CApp::Render(void) {
 		glEnd();
 	}
 
-	glPushMatrix();
 	for(float i = 0; i < 30; i += 3) {
 		for(float j = 3; j < 30; j += 3) {
-			glLoadIdentity();
+			glPushMatrix();
 			DrawCube(myColors, -j, 1.5, 0.0, 3.0);
+			glPopMatrix();
 		}
-		glLoadIdentity();
+		glPushMatrix();
 		DrawCube(myColors, 0.0, 1.5, i, 3.0);
+		glPopMatrix();
 	}
 
 	for(float i = 0; i < 33; i += 3) {
 		for(float j = 3; j < 33; j += 3) {
-			glLoadIdentity();
+			glPushMatrix();
 			glTranslatef(-30.0, 0.0, 30.0);
 			DrawCube(myColors, j, 1.5, 0.0, 3.0);
+			glPopMatrix();
 		}
-		glLoadIdentity();
+		glPushMatrix();
 		glTranslatef(-30.0, 0.0, 30.0);
 		DrawCube(myColors, 0.0, 1.5, -i, 3.0);
+		glPopMatrix();
 	}
 	
-	glLoadIdentity();
+	glPushMatrix();
 	glTranslatef(-15.0, 1.5, 15.0);
 	glCallList(myCube1);
 	glPopMatrix();

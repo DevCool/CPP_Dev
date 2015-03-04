@@ -9,12 +9,14 @@
 
 using namespace std;
 
+#include "CCamera.h"
 #include "CObjLoader.h"
 
 #ifdef _TEST_GAME_
 #define			SCREEN_WIDTH			800
 #define			SCREEN_HEIGHT			600
 #endif
+
 #define			GAME_FPS				60
 
 typedef struct COLORS {
@@ -44,13 +46,14 @@ private:
 private:
 	Uint8 *keys;
 	Uint32 start;
-	bool running;
+	bool running, mousein;
 	vector<colors*> myColors;
 
 protected:
 	SDL_Surface* screen;
 	int myCube1;
 	CObjLoader objLoader;
+	CCamera objCamera;
 
 };
 

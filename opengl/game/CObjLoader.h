@@ -42,6 +42,7 @@ public:
 	~CObjLoader(void);
 	
 	int LoadObject(const char *filename);
+	void Destroy(void);
 
 };
 

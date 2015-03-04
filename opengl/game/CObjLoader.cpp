@@ -31,6 +31,7 @@ CObjLoader::CObjLoader(void) {
 }
 
 CObjLoader::~CObjLoader(void) {
+	Cleanup();
 }
 
 int CObjLoader::LoadObject(const char *filename) {
@@ -94,8 +95,6 @@ int CObjLoader::LoadObject(const char *filename) {
 			}
 		}
 	glEndList();
-	
-	Cleanup();
 
 	return num;
 }
@@ -117,4 +116,8 @@ void CObjLoader::Cleanup(void) {
 	normals.clear();
 	faces.clear();
 	coords.clear();
+}
+
+void CObjLoader::Destroy(void) {
+	delete this;
 }
