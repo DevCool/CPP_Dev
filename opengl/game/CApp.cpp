@@ -29,6 +29,13 @@ int CApp::Start(int width, int height) {
 		return -1;
 	}
 	
+	int imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
+	if(!(IMG_Init(imgFlags) & imgFlags)) {
+		cout << "Cannot initialise IMG functions." << endl;
+		SDL_Quit();
+		return -1;
+	}
+	
 	if((screen = SDL_SetVideoMode(width, height, 32, SDL_SWSURFACE | SDL_OPENGL | SDL_GL_DOUBLEBUFFER)) != 0) {
 		SDL_WM_SetCaption("My Game (OpenGL)", NULL);
 		InitOpenGL(width, height);
@@ -79,7 +86,7 @@ void CApp::InitOpenGL(int width, int height) {
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_DEPTH_TEST);
 	
-	if((myCube1 = objLoader.LoadObject("data/test.obj")) == 0) {
+	if((myCube1 = objLoader.LoadObject("data/test.obj")) == -1) {
 		cout << "Cannot create object!" << endl;
 		SDL_Quit();
 		return;
@@ -97,6 +104,7 @@ void CApp::Cleanup(void) {
 	SDL_ShowCursor(SDL_ENABLE);
 	
 	SDL_FreeSurface(screen);
+	IMG_Quit();
 	SDL_Quit();
 }
 

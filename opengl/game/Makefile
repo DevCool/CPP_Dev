@@ -10,7 +10,7 @@ all: $(EXEC)
 rebuild: clean $(EXEC)
 
 $(EXEC): $(OBJS)
-	$(LD) $(CXXFLAGS) $(OBJS) -o $@ -lGL -lGLU -lSDLmain -lSDL
+	$(LD) $(CXXFLAGS) $(OBJS) -o $@ -lGL -lGLU -lSDLmain -lSDL -lSDL_image
 
 clean:
 	@echo Cleaning up...
