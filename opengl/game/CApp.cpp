@@ -124,10 +124,11 @@ void CApp::Render(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	gluLookAt(objCamera.getCamX(), objCamera.getCamY(), objCamera.getCamZ(), objCamera.getCamX()+objCamera.getCamYaw(), objCamera.getCamY()+objCamera.getCamPitch(), objCamera.getCamZ()+objCamera.getCamYaw(), 0.0, 1.0, 0.0);
 	glLoadIdentity();
-	
+
+	glPushMatrix();	
 	objCamera.controlCamera(0.2, 0.2, mousein);
 	objCamera.updateCamera();
-		
+
 	glColor3f(myColors[2]->red, myColors[2]->green, myColors[2]->blue);
 	for(float i = -50; i < 50; i += 1) {
 		glBegin(GL_LINES);
@@ -140,7 +141,8 @@ void CApp::Render(void) {
 		glVertex3f(i, 0.0, 50);
 		glEnd();
 	}
-
+	
+	// Cube set 1
 	for(float i = 0; i < 30; i += 3) {
 		for(float j = 3; j < 30; j += 3) {
 			glPushMatrix();
@@ -164,14 +166,15 @@ void CApp::Render(void) {
 		DrawCube(myColors, 0.0, 1.5, -i, 3.0);
 		glPopMatrix();
 	}
-	
+
 	glPushMatrix();
-	glTranslatef(-15.0, 1.5, 15.0);
+	glTranslatef(-15.0, 1.0, 15.0);
 	glCallList(myCube1);
 	glPopMatrix();
 	
 	glFlush();	
 	SDL_GL_SwapBuffers();
+	glPopMatrix();
 }
 
 void CApp::Update(void) {
