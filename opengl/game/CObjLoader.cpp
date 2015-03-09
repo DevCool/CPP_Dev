@@ -142,24 +142,7 @@ int CObjLoader::LoadObject(const char *filename) {
 		}
 		else if((*coords[i])[0] == 'f') {
 			int a, b, c, d, e;
-			if(count(coords[i]->begin(), coords[i]->end(), ' ') == 3) {
-				if(coords[i]->find("//") != string::npos)
-				{
-					sscanf(coords[i]->c_str(), "f %d//%d %d//%d %d//%d", &b, &a, &c, &a, &d, &a);
-					faces.push_back(new face(a, b, c, d, 0, 0, 0, curmat));
-				}
-				else if(coords[i]->find("/") != string::npos)
-				{
-					int t[3];
-					sscanf(coords[i]->c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &b, &t[0], &a, &c, &t[1], &a, &d, &t[2], &a);
-					faces.push_back(new face(a, b, c, d, t[0], t[1], t[2], curmat));
-				}
-				else {
-					sscanf(coords[i]->c_str(), "f %d %d %d", &a, &b, &c);
-					faces.push_back(new face(-1, a, b, c));
-				}
-			}
-			else if(count(coords[i]->begin(), coords[i]->end(), ' ') == 4) {
+			if(count(coords[i]->begin(), coords[i]->end(), ' ') == 4) {
 				if(coords[i]->find("//") != string::npos)
 				{
 					sscanf(coords[i]->c_str(), "f %d//%d %d//%d %d//%d %d//%d", &b, &a, &c, &a, &d, &a, &e, &a);
@@ -176,18 +159,35 @@ int CObjLoader::LoadObject(const char *filename) {
 					faces.push_back(new face(-1, a, b, c, d));
 				}
 			}
+			else {
+				if(coords[i]->find("//") != string::npos)
+				{
+					sscanf(coords[i]->c_str(), "f %d//%d %d//%d %d//%d", &b, &a, &c, &a, &d, &a);
+					faces.push_back(new face(a, b, c, d, 0, 0, 0, curmat));
+				}
+				else if(coords[i]->find("/") != string::npos)
+				{
+					int t[3];
+					sscanf(coords[i]->c_str(), "f %d/%d/%d %d/%d/%d %d/%d/%d", &b, &t[0], &a, &c, &t[1], &a, &d, &t[2], &a);
+					faces.push_back(new face(a, b, c, d, t[0], t[1], t[2], curmat));
+				}
+				else {
+					sscanf(coords[i]->c_str(), "f %d %d %d", &a, &b, &c);
+					faces.push_back(new face(-1, a, b, c));
+				}
+			}
 		}
-		else if(((*coords[i])[0] == 'u') && ((*coords[i])[0] == 's') && ((*coords[i])[0] == 'e')) {
-			char tmp[200];
-			sscanf(coords[i]->c_str(), "usemtl %s", tmp);
+		else if(((*coords[i])[0] == 'u') && ((*coords[i])[1] == 's') && ((*coords[i])[2] == 'e')) {
+			char matname[200];
+			sscanf(coords[i]->c_str(), "usemtl %s", matname);
 			for(unsigned int i = 0; i < materials.size(); i++) {
-				if(strcmp(materials[i]->name.c_str(), tmp) == 0) {
+				if(strcmp(materials[i]->name.c_str(), matname) == 0) {
 					curmat = i;
 					break;
 				}
 			}
 		}
-		else if(((*coords[i])[0] == 'm') && ((*coords[i])[0] == 't') && ((*coords[i])[0] == 'l') && ((*coords[i])[0] == 'l') && ((*coords[i])[0] == 'i') && ((*coords[i])[0] == 'b')) {
+		else if(((*coords[i])[0] == 'm') && ((*coords[i])[1] == 't') && ((*coords[i])[2] == 'l') && ((*coords[i])[3] == 'l')) {
 			char filen[200];
 			sscanf(coords[i]->c_str(), "mtllib %s", filen);
 			ifstream matlib_in(filen);
@@ -197,11 +197,11 @@ int CObjLoader::LoadObject(const char *filename) {
 				return -1;
 			}
 			ismaterial = true;
-			vector<string*> tmp;
+			vector<string> tmp;
 			char buf[200];
 			while(!matlib_in.eof()) {
 				matlib_in.getline(buf, 200);
-				tmp.push_back(new string(buf));
+				tmp.push_back(buf);
 			}
 			char name[200];
 			char filename[200];
@@ -211,60 +211,57 @@ int CObjLoader::LoadObject(const char *filename) {
 			bool ismat = false;
 			strcpy(filename, "\0");
 			for(unsigned int i = 0; i < tmp.size(); i++) {
-				if((*tmp[i])[0] == '#')
+				if(tmp[i][0] == '#')
 					continue;
-				else if(((*tmp[i])[0] == 'n') && ((*tmp[i])[1] == 'e') && ((*tmp[i])[2] == 'w')) {
+				else if((tmp[i][0] == 'n') && (tmp[i][1] == 'e') && (tmp[i][2] == 'w')) {
 					ismat=false;
-					sscanf(tmp[i]->c_str(), "newmtl %s", name);
+					sscanf(tmp[i].c_str(), "newmtl %s", name);
 				}
-				else if(((*tmp[i])[0] == 'N') && ((*tmp[i])[1] == 's')) {
-					sscanf(tmp[i]->c_str(), "Ns %f", &ns);
+				else if((tmp[i][0] == 'N') && (tmp[i][1] == 's')) {
+					sscanf(tmp[i].c_str(), "Ns %f", &ns);
 					ismat = true;
 				}
-				else if(((*tmp[i])[0] == 'K') && ((*tmp[i])[1] == 'a')) {
-					sscanf(tmp[i]->c_str(), "Ka %f %f %f", &amb[0], &amb[1], &amb[2]);
+				else if((tmp[i][0] == 'K') && (tmp[i][1] == 'a')) {
+					sscanf(tmp[i].c_str(), "Ka %f %f %f", &amb[0], &amb[1], &amb[2]);
 					ismat = true;
 				}
-				else if(((*tmp[i])[0] == 'K') && ((*tmp[i])[1] == 'd')) {
-					sscanf(tmp[i]->c_str(), "Kd %f %f %f", &dif[0], &dif[1], &dif[2]);
+				else if((tmp[i][0] == 'K') && (tmp[i][1] == 'd')) {
+					sscanf(tmp[i].c_str(), "Kd %f %f %f", &dif[0], &dif[1], &dif[2]);
 					ismat = true;
 				}
-				else if(((*tmp[i])[0] == 'K') && ((*tmp[i])[1] == 's')) {
-					sscanf(tmp[i]->c_str(), "Ks %f %f %f", &spec[0], &spec[1], &spec[2]);
+				else if((tmp[i][0] == 'K') && (tmp[i][1] == 's')) {
+					sscanf(tmp[i].c_str(), "Ks %f %f %f", &spec[0], &spec[1], &spec[2]);
 					ismat = true;
 				}
-				else if(((*tmp[i])[0] == 'N') && ((*tmp[i])[1] == 'i')) {
-					sscanf(tmp[i]->c_str(), "Ni %f", &ni);
+				else if((tmp[i][0] == 'N') && (tmp[i][1] == 'i')) {
+					sscanf(tmp[i].c_str(), "Ni %f", &ni);
 					ismat = true;
 				}
-				else if(((*tmp[i])[0] == 'd') && ((*tmp[i])[1] == ' ')) {
-					sscanf(tmp[i]->c_str(), "d %f", &alpha);
+				else if((tmp[i][0] == 'd') && (tmp[i][1] == ' ')) {
+					sscanf(tmp[i].c_str(), "d %f", &alpha);
 					ismat = true;
 				}
-				else if(((*tmp[i])[0] == 'i') && ((*tmp[i])[1] == 'l')) {
-					sscanf(tmp[i]->c_str(), "illum %d", &illum);
+				else if((tmp[i][0] == 'i') && (tmp[i][1] == 'l')) {
+					sscanf(tmp[i].c_str(), "illum %d", &illum);
 					ismat = true;
 				}
-				else if(((*tmp[i])[0] == 'm') && ((*tmp[i])[1] == 'a') && ((*tmp[i])[2] == 'p')) {
-					sscanf(tmp[i]->c_str(), "map_Kd %s", filename);
+				else if((tmp[i][0] == 'm') && (tmp[i][1] == 'a') && (tmp[i][2] == 'p')) {
+					sscanf(tmp[i].c_str(), "map_Kd %s", filename);
 					tex = LoadTexture(filename);
 					ismat = true;
+					if(ismat) {
+						if(strcmp(filename, "\0") != 0) {
+							materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, tex));
+							strcpy(filename, "\0");
+						}
+						else {
+							materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, -1));
+						}
+					}
 				}
 			}
-			if(ismat) {
-				if(strcmp(filename, "\0") != 0) {
-					materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, tex));
-					strcpy(filename, "\0");
-				}
-				else {
-					materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, -1));
-				}
-			}
-			for(unsigned int i = 0; i < tmp.size(); i++)
-				delete tmp[i];
-			tmp.clear();
 		}
-		else if(((*coords[i])[0] == 'v') && ((*coords[i])[0] == 't')) {
+		else if(((*coords[i])[0] == 'v') && ((*coords[i])[1] == 't')) {
 			float u, v;
 			sscanf(coords[i]->c_str(), "vt %f %f", &u, &v);
 			texcoords.push_back(new texcoord(u, 1-v));
@@ -278,9 +275,9 @@ int CObjLoader::LoadObject(const char *filename) {
 	
 	int num;
 	num = glGenLists(1);
-	int lastmat = -1;
 	glNewList(num, GL_COMPILE);
 		for(unsigned int i = 0; i < faces.size(); i++) {
+			int lastmat = -1;
 			if((lastmat != faces[i]->mat) && ismaterial) {
 				float diffuse[] = {materials[faces[i]->mat]->dif[0], materials[faces[i]->mat]->dif[1], materials[faces[i]->mat]->dif[2], 1.0};
 				float ambient[] = {materials[faces[i]->mat]->amb[0], materials[faces[i]->mat]->amb[1], materials[faces[i]->mat]->amb[2], 1.0};
@@ -341,7 +338,7 @@ void CObjLoader::Cleanup(void) {
 	
 	for(unsigned int i = 0; i < texcoords.size(); i++)
 		delete texcoords[i];
-	
+		
 	verts.clear();
 	normals.clear();
 	faces.clear();
@@ -351,5 +348,6 @@ void CObjLoader::Cleanup(void) {
 }
 
 void CObjLoader::Destroy(void) {
+	Cleanup();
 	delete this;
 }

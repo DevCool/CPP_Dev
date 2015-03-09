@@ -52,7 +52,7 @@ private:
 
 protected:
 	SDL_Surface* screen;
-	int myCube1;
+	int myMonkey1;
 	CObjLoader objLoader;
 	CCamera objCamera;
 

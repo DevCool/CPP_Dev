@@ -86,7 +86,12 @@ void CApp::InitOpenGL(int width, int height) {
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_DEPTH_TEST);
 	
-	if((myCube1 = objLoader.LoadObject("data/test.obj")) == -1) {
+/*	if((myCube1 = objLoader.LoadObject("data/test.obj")) == -1) {
+		cout << "Cannot create object!" << endl;
+		SDL_Quit();
+		return;
+	} */
+	if((myMonkey1 = objLoader.LoadObject("test3.obj")) == -1) {
 		cout << "Cannot create object!" << endl;
 		SDL_Quit();
 		return;
@@ -98,7 +103,7 @@ void CApp::Cleanup(void) {
 		delete myColors[i];
 	
 	myColors.clear();
-	glDeleteLists(myCube1, 1);
+	glDeleteLists(myMonkey1, 1);
 	
 	mousein = false;
 	SDL_ShowCursor(SDL_ENABLE);
@@ -169,7 +174,8 @@ void CApp::Render(void) {
 
 	glPushMatrix();
 	glTranslatef(-15.0, 1.0, 15.0);
-	glCallList(myCube1);
+	//glCallList(myCube1);
+	glCallList(myMonkey1);
 	glPopMatrix();
 	
 	glFlush();	

@@ -1,7 +1,7 @@
 OBJS=CCamera.o CObjLoader.o CApp.o Main.o
-CFLAGS=-O2 -Wall
+CFLAGS=-O2 -Wall -ggdb
 CXXFLAGS=${CFLAGS}
-LD=g++
+LD=g++ -ggdb
 
 EXEC=game
 
