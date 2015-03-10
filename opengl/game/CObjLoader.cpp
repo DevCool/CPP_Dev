@@ -28,9 +28,10 @@ FACE::FACE(int facenum, int f1, int f2, int f3, int t1, int t2, int t3, int m) {
 	faces[0] = f1;
 	faces[1] = f2;
 	faces[2] = f3;
-	tex[0] = t1;
-	tex[1] = t2;
-	tex[2] = t3;
+	texcoord[0] = t1;
+	texcoord[1] = t2;
+	texcoord[2] = t3;
+	mat = m;
 	hasFour = false;
 }
 
@@ -40,10 +41,11 @@ FACE::FACE(int facenum, int f1, int f2, int f3, int f4, int t1, int t2, int t3, 
 	faces[1] = f2;
 	faces[2] = f3;
 	faces[3] = f4;
-	tex[0] = t1;
-	tex[1] = t2;
-	tex[2] = t3;
-	tex[3] = t4;
+	texcoord[0] = t1;
+	texcoord[1] = t2;
+	texcoord[2] = t3;
+	texcoord[3] = t4;
+	mat = m;
 	hasFour = true;
 }
 
@@ -156,7 +158,7 @@ int CObjLoader::LoadObject(const char *filename) {
 				}
 				else {
 					sscanf(coords[i]->c_str(), "f %d %d %d %d", &a, &b, &c, &d);
-					faces.push_back(new face(-1, a, b, c, d));
+					faces.push_back(new face(-1, a, b, c, d, 0, 0, 0, 0, curmat));
 				}
 			}
 			else {
@@ -173,7 +175,7 @@ int CObjLoader::LoadObject(const char *filename) {
 				}
 				else {
 					sscanf(coords[i]->c_str(), "f %d %d %d", &a, &b, &c);
-					faces.push_back(new face(-1, a, b, c));
+					faces.push_back(new face(-1, a, b, c, 0, 0, 0, curmat));
 				}
 			}
 		}
@@ -207,14 +209,23 @@ int CObjLoader::LoadObject(const char *filename) {
 			char filename[200];
 			float amb[3], dif[3], spec[3], alpha, ns, ni;
 			int illum;
-			unsigned int tex = 0;
+			unsigned int texture = -1;
 			bool ismat = false;
 			strcpy(filename, "\0");
 			for(unsigned int i = 0; i < tmp.size(); i++) {
 				if(tmp[i][0] == '#')
 					continue;
 				else if((tmp[i][0] == 'n') && (tmp[i][1] == 'e') && (tmp[i][2] == 'w')) {
-					ismat=false;
+					if(ismat) {
+						if(strcmp(filename, "\0") != 0) {
+							materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, texture));
+							strcpy(filename, "\0");
+						}
+						else {
+							materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, -1));
+						}
+					}
+					ismat = false;
 					sscanf(tmp[i].c_str(), "newmtl %s", name);
 				}
 				else if((tmp[i][0] == 'N') && (tmp[i][1] == 's')) {
@@ -247,17 +258,16 @@ int CObjLoader::LoadObject(const char *filename) {
 				}
 				else if((tmp[i][0] == 'm') && (tmp[i][1] == 'a') && (tmp[i][2] == 'p')) {
 					sscanf(tmp[i].c_str(), "map_Kd %s", filename);
-					tex = LoadTexture(filename);
+					texture = LoadTexture(filename);
 					ismat = true;
-					if(ismat) {
-						if(strcmp(filename, "\0") != 0) {
-							materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, tex));
-							strcpy(filename, "\0");
-						}
-						else {
-							materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, -1));
-						}
-					}
+				}
+			}
+			if(ismat) {
+				if(strcmp(filename, "\0") != 0) {
+					materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, texture));
+				}
+				else {
+					materials.push_back(new material(name, alpha, ns, ni, amb, dif, spec, illum, -1));
 				}
 			}
 		}
@@ -267,18 +277,19 @@ int CObjLoader::LoadObject(const char *filename) {
 			texcoords.push_back(new texcoord(u, 1-v));
 			istexture = true;
 		}
-		if(materials.size() == 0)
+	}
+	
+	if(materials.size() == 0)
 			ismaterial = false;
 		else
 			ismaterial = true;
-	}
 	
 	int num;
 	num = glGenLists(1);
 	glNewList(num, GL_COMPILE);
+		int lastmat = -1;
 		for(unsigned int i = 0; i < faces.size(); i++) {
-			int lastmat = -1;
-			if((lastmat != faces[i]->mat) && ismaterial) {
+			if(lastmat != faces[i]->mat && ismaterial) {
 				float diffuse[] = {materials[faces[i]->mat]->dif[0], materials[faces[i]->mat]->dif[1], materials[faces[i]->mat]->dif[2], 1.0};
 				float ambient[] = {materials[faces[i]->mat]->amb[0], materials[faces[i]->mat]->amb[1], materials[faces[i]->mat]->amb[2], 1.0};
 				float specular[] = {materials[faces[i]->mat]->spec[0], materials[faces[i]->mat]->spec[1], materials[faces[i]->mat]->spec[2], 1.0};
@@ -297,26 +308,41 @@ int CObjLoader::LoadObject(const char *filename) {
 			}
 			if(faces[i]->hasFour) {
 				glBegin(GL_QUADS);
-				glNormal3f(normals[faces[i]->faceNum-1]->x, normals[faces[i]->faceNum-1]->y, normals[faces[i]->faceNum-1]->z);
+				if(isnormals)
+					glNormal3f(normals[faces[i]->faceNum-1]->x, normals[faces[i]->faceNum-1]->y, normals[faces[i]->faceNum-1]->z);
+				if(istexture && materials[faces[i]->mat]->texture != -1)
+					glTexCoord2f(texcoords[faces[i]->texcoord[0]-1]->u, texcoords[faces[i]->texcoord[0]-1]->v);
 				glVertex3f(verts[faces[i]->faces[0]-1]->x, verts[faces[i]->faces[0]-1]->y, verts[faces[i]->faces[0]-1]->z);
+				if(istexture && materials[faces[i]->mat]->texture != -1)
+					glTexCoord2f(texcoords[faces[i]->texcoord[1]-1]->u, texcoords[faces[i]->texcoord[1]-1]->v);
 				glVertex3f(verts[faces[i]->faces[1]-1]->x, verts[faces[i]->faces[1]-1]->y, verts[faces[i]->faces[1]-1]->z);
+				if(istexture && materials[faces[i]->mat]->texture != -1)
+					glTexCoord2f(texcoords[faces[i]->texcoord[2]-1]->u, texcoords[faces[i]->texcoord[2]-1]->v);
 				glVertex3f(verts[faces[i]->faces[2]-1]->x, verts[faces[i]->faces[2]-1]->y, verts[faces[i]->faces[2]-1]->z);
+				if(istexture && materials[faces[i]->mat]->texture != -1)
+					glTexCoord2f(texcoords[faces[i]->texcoord[3]-1]->u, texcoords[faces[i]->texcoord[3]-1]->v);
 				glVertex3f(verts[faces[i]->faces[3]-1]->x, verts[faces[i]->faces[3]-1]->y, verts[faces[i]->faces[3]-1]->z);
 				glEnd();
 			}
 			else {
-				glBegin(GL_QUADS);
-				glNormal3f(normals[faces[i]->faceNum-1]->x, normals[faces[i]->faceNum-1]->y, normals[faces[i]->faceNum-1]->z);
+				glBegin(GL_TRIANGLES);
+				if(isnormals)
+					glNormal3f(normals[faces[i]->faceNum-1]->x, normals[faces[i]->faceNum-1]->y, normals[faces[i]->faceNum-1]->z);
+				if(istexture && materials[faces[i]->mat]->texture != -1)
+					glTexCoord2f(texcoords[faces[i]->texcoord[0]-1]->u, texcoords[faces[i]->texcoord[0]-1]->v);
 				glVertex3f(verts[faces[i]->faces[0]-1]->x, verts[faces[i]->faces[0]-1]->y, verts[faces[i]->faces[0]-1]->z);
+				if(istexture && materials[faces[i]->mat]->texture != -1)
+					glTexCoord2f(texcoords[faces[i]->texcoord[1]-1]->u, texcoords[faces[i]->texcoord[1]-1]->v);
 				glVertex3f(verts[faces[i]->faces[1]-1]->x, verts[faces[i]->faces[1]-1]->y, verts[faces[i]->faces[1]-1]->z);
+				if(istexture && materials[faces[i]->mat]->texture != -1)
+					glTexCoord2f(texcoords[faces[i]->texcoord[2]-1]->u, texcoords[faces[i]->texcoord[2]-1]->v);
 				glVertex3f(verts[faces[i]->faces[2]-1]->x, verts[faces[i]->faces[2]-1]->y, verts[faces[i]->faces[2]-1]->z);
 				glEnd();
 			}
 		}
 	glEndList();
-	lists.push_back(num);
-		
 	Cleanup();
+	lists.push_back(num);
 	return num;
 }
 

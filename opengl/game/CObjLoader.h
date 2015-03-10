@@ -23,7 +23,7 @@ typedef struct FACE {
 	int faceNum;
 	bool hasFour;
 	int faces[4];
-	int tex[4];
+	int texcoord[4];
 	int mat;
 	FACE(int facenum, int f1, int f2, int f3);
 	FACE(int facenum, int f1, int f2, int f3, int f4);
