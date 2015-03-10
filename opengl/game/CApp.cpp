@@ -86,16 +86,25 @@ void CApp::InitOpenGL(int width, int height) {
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_DEPTH_TEST);
 	
-/*	if((myCube1 = objLoader.LoadObject("data/test.obj")) == -1) {
+	if((myCube1 = objLoader.LoadObject("test4.obj")) == -1) {
 		cout << "Cannot create object!" << endl;
 		SDL_Quit();
 		return;
-	} */
+	}
+	
 	if((myMonkey1 = objLoader.LoadObject("test3.obj")) == -1) {
 		cout << "Cannot create object!" << endl;
 		SDL_Quit();
 		return;
 	}
+	
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	
+	float col[] = {1.0, 1.0, 1.0, 1.0};
+	glLightfv(GL_LIGHT0, GL_AMBIENT_AND_DIFFUSE, col);
+	glLightfv(GL_LIGHT1, GL_AMBIENT_AND_DIFFUSE, col);
 }
 
 void CApp::Cleanup(void) {
@@ -103,7 +112,6 @@ void CApp::Cleanup(void) {
 		delete myColors[i];
 	
 	myColors.clear();
-	glDeleteLists(myMonkey1, 1);
 	
 	mousein = false;
 	SDL_ShowCursor(SDL_ENABLE);
@@ -130,7 +138,12 @@ void CApp::Render(void) {
 	gluLookAt(objCamera.getCamX(), objCamera.getCamY(), objCamera.getCamZ(), objCamera.getCamX()+objCamera.getCamYaw(), objCamera.getCamY()+objCamera.getCamPitch(), objCamera.getCamZ()+objCamera.getCamYaw(), 0.0, 1.0, 0.0);
 	glLoadIdentity();
 
-	glPushMatrix();	
+	glPushMatrix();
+	float pos[] = {-15.0, 10.0, 15.0, 0.0};
+	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+	float pos2[] = {0.0, 3.0, 15.0, 0.0};
+	glLightfv(GL_LIGHT1, GL_POSITION, pos2);
+	
 	objCamera.controlCamera(0.2, 0.2, mousein);
 	objCamera.updateCamera();
 
@@ -173,8 +186,12 @@ void CApp::Render(void) {
 	}
 
 	glPushMatrix();
+	glTranslatef(-8.0, 1.0, 10.0);
+	glCallList(myCube1);
+	glPopMatrix();
+	
+	glPushMatrix();
 	glTranslatef(-15.0, 1.0, 15.0);
-	//glCallList(myCube1);
 	glCallList(myMonkey1);
 	glPopMatrix();
 	
