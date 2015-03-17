@@ -138,14 +138,14 @@ void CApp::Render(void) {
 	gluLookAt(objCamera.getCamX(), objCamera.getCamY(), objCamera.getCamZ(), objCamera.getCamX()+objCamera.getCamYaw(), objCamera.getCamY()+objCamera.getCamPitch(), objCamera.getCamZ()+objCamera.getCamYaw(), 0.0, 1.0, 0.0);
 	glLoadIdentity();
 
-	glPushMatrix();
+	glPushMatrix();	
+	objCamera.controlCamera(0.2, 0.2, mousein);
+	objCamera.updateCamera();
 	float pos[] = {-15.0, 10.0, 15.0, 0.0};
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
 	float pos2[] = {0.0, 3.0, 15.0, 0.0};
 	glLightfv(GL_LIGHT1, GL_POSITION, pos2);
-	
-	objCamera.controlCamera(0.2, 0.2, mousein);
-	objCamera.updateCamera();
+	glDisable(GL_LIGHTING);
 
 	glColor3f(myColors[2]->red, myColors[2]->green, myColors[2]->blue);
 	for(float i = -50; i < 50; i += 1) {
@@ -186,11 +186,13 @@ void CApp::Render(void) {
 	}
 
 	glPushMatrix();
+	glEnable(GL_LIGHTING);
 	glTranslatef(-8.0, 1.0, 10.0);
 	glCallList(myCube1);
 	glPopMatrix();
 	
 	glPushMatrix();
+	glEnable(GL_LIGHTING);
 	glTranslatef(-15.0, 1.0, 15.0);
 	glCallList(myMonkey1);
 	glPopMatrix();

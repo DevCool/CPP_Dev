@@ -1,7 +1,7 @@
 OBJS=CCamera.o CObjLoader.o CApp.o Main.o
-CFLAGS=-O2 -Wall -ggdb
+CFLAGS=-O2 -Wall
 CXXFLAGS=${CFLAGS}
-LD=g++ -ggdb
+LD=g++
 
 EXEC=game
 
@@ -11,6 +11,9 @@ rebuild: clean $(EXEC)
 
 $(EXEC): $(OBJS)
 	$(LD) $(CXXFLAGS) $(OBJS) -o $@ -lGL -lGLU -lSDLmain -lSDL -lSDL_image
+
+debug: $(OBJS)
+	$(LD) $(CXXFLAGS) -ggdb $(OBJS) -o $@ -lGL -lGLU -lSDLmain -lSDL -lSDL_image
 
 clean:
 	@echo Cleaning up...
