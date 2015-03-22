@@ -1,0 +1,23 @@
+OBJS=CCamera.o CObjLoader.o CApp.o Main.o
+CC=i686-w64-mingw32-gcc
+CXX=i686-w64-mingw32-g++
+CFLAGS=-O2 -Wall
+CXXFLAGS=${CFLAGS}
+LD=i686-w64-mingw32-g++
+
+EXEC=game.exe
+
+all: $(EXEC)
+
+rebuild: clean $(EXEC)
+
+$(EXEC): $(OBJS)
+	$(LD) $(CXXFLAGS) $(OBJS) -o $@ -lmingw32 -lopengl32 -lglu32 -lSDLmain -lSDL -lSDL_image
+
+debug: i686-w64-mingw32-g++ $(OBJS)
+	$(LD) $(CXXFLAGS) -ggdb $(OBJS) -o $@ -lmingw32 -lopengl32 -lglu32 -lSDLmain -lSDL -lSDL_image
+
+clean:
+	@echo Cleaning up...
+	@rm *.o $(EXEC)
+	@echo Done.
