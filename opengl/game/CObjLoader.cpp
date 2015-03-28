@@ -91,6 +91,7 @@ CObjLoader::~CObjLoader(void) {
 	for(vector<unsigned int>::const_iterator it = lists.begin(); it != lists.end(); it++) {
 		glDeleteLists(*it, 1);
 	}
+	vec3.clear();
 }
 
 unsigned int CObjLoader::LoadTexture(const char *filename) {
@@ -136,6 +137,7 @@ int CObjLoader::LoadObject(const char *filename) {
 			float tmpx, tmpy, tmpz;
 			sscanf(coords[i]->c_str(), "v %f %f %f", &tmpx, &tmpy, &tmpz);
 			verts.push_back(new vert(tmpx, tmpy, tmpz));
+			vec3.push_back(CVector3(tmpx, tmpy, tmpz));
 		}
 		else if(((*coords[i])[0] == 'v') && ((*coords[i])[1] == 'n')) {
 			float tmpx, tmpy, tmpz;
@@ -374,6 +376,5 @@ void CObjLoader::Cleanup(void) {
 }
 
 void CObjLoader::Destroy(void) {
-	Cleanup();
 	delete this;
 }

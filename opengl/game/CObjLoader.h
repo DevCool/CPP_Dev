@@ -12,6 +12,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "CVector3.h"
+
 using namespace std;
 
 typedef struct VERTEX {
@@ -62,6 +64,8 @@ private:
 	void Cleanup(void);
 	
 public:
+	vector<CVector3> vec3;
+
 	CObjLoader(void);
 	~CObjLoader(void);
 	

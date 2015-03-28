@@ -92,13 +92,18 @@ void CApp::InitOpenGL(int width, int height) {
 		return;
 	}
 	
+	for(unsigned int i = 0; i < objLoader.vec3.size(); i++) {
+		vertexList1.push_back(CVector3(objLoader.vec3[i].x, objLoader.vec3[i].y, objLoader.vec3[i].z));
+		cout << "Vector3 [" << i << "] : x [" << vertexList1[i].x << "]  y [" << vertexList1[i].y << "]  z [" << vertexList1[i].z << "]" << endl;
+	}
+	
 	if((myMonkey1 = objLoader.LoadObject("test3.obj")) == -1) {
 		cout << "Cannot create object!" << endl;
 		SDL_Quit();
 		return;
 	}
 	
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHT1);
 	
@@ -145,7 +150,6 @@ void CApp::Render(void) {
 	glLightfv(GL_LIGHT0, GL_POSITION, pos);
 	float pos2[] = {0.0, 3.0, 15.0, 0.0};
 	glLightfv(GL_LIGHT1, GL_POSITION, pos2);
-	glDisable(GL_LIGHTING);
 
 	glColor3f(myColors[2]->red, myColors[2]->green, myColors[2]->blue);
 	for(float i = -50; i < 50; i += 1) {
@@ -185,17 +189,17 @@ void CApp::Render(void) {
 		glPopMatrix();
 	}
 
-	glPushMatrix();
 	glEnable(GL_LIGHTING);
+	glPushMatrix();
 	glTranslatef(-8.0, 1.0, 10.0);
 	glCallList(myCube1);
 	glPopMatrix();
 	
 	glPushMatrix();
-	glEnable(GL_LIGHTING);
 	glTranslatef(-15.0, 1.0, 15.0);
 	glCallList(myMonkey1);
 	glPopMatrix();
+	glDisable(GL_LIGHTING);
 	
 	glFlush();	
 	SDL_GL_SwapBuffers();
