@@ -1,10 +1,18 @@
 #include "CObjLoader.h"
 
+COORDINATE::COORDINATE(float a, float b, float c) {
+	x = a;
+	y = b;
+	z = c;
+}
+
+/***********************************************
 VERTEX::VERTEX(float a, float b, float c) {
 	x = a;
 	y = b;
 	z = c;
 }
+ ***********************************************/
 
 FACE::FACE(int facenum, int f1, int f2, int f3) {
 	faceNum = facenum;
@@ -91,7 +99,6 @@ CObjLoader::~CObjLoader(void) {
 	for(vector<unsigned int>::const_iterator it = lists.begin(); it != lists.end(); it++) {
 		glDeleteLists(*it, 1);
 	}
-	vec3.clear();
 }
 
 unsigned int CObjLoader::LoadTexture(const char *filename) {
@@ -136,13 +143,12 @@ int CObjLoader::LoadObject(const char *filename) {
 		else if(((*coords[i])[0] == 'v') && ((*coords[i])[1] == ' ')) {
 			float tmpx, tmpy, tmpz;
 			sscanf(coords[i]->c_str(), "v %f %f %f", &tmpx, &tmpy, &tmpz);
-			verts.push_back(new vert(tmpx, tmpy, tmpz));
-			vec3.push_back(CVector3(tmpx, tmpy, tmpz));
+			verts.push_back(new coordinate(tmpx, tmpy, tmpz));
 		}
 		else if(((*coords[i])[0] == 'v') && ((*coords[i])[1] == 'n')) {
 			float tmpx, tmpy, tmpz;
 			sscanf(coords[i]->c_str(), "vn %f %f %f", &tmpx, &tmpy, &tmpz);
-			normals.push_back(new vert(tmpx, tmpy, tmpz));
+			normals.push_back(new coordinate(tmpx, tmpy, tmpz));
 		}
 		else if((*coords[i])[0] == 'f') {
 			int a, b, c, d, e;

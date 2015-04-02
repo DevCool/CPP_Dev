@@ -49,7 +49,6 @@ private:
 	Uint32 start;
 	bool running, mousein;
 	vector<colors*> myColors;
-	vector<CVector3> vertexList1;
 
 protected:
 	SDL_Surface* screen;

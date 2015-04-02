@@ -92,11 +92,6 @@ void CApp::InitOpenGL(int width, int height) {
 		return;
 	}
 	
-	for(unsigned int i = 0; i < objLoader.vec3.size(); i++) {
-		vertexList1.push_back(CVector3(objLoader.vec3[i].x, objLoader.vec3[i].y, objLoader.vec3[i].z));
-		cout << "Vector3 [" << i << "] : x [" << vertexList1[i].x << "]  y [" << vertexList1[i].y << "]  z [" << vertexList1[i].z << "]" << endl;
-	}
-	
 	if((myMonkey1 = objLoader.LoadObject("test3.obj")) == -1) {
 		cout << "Cannot create object!" << endl;
 		SDL_Quit();

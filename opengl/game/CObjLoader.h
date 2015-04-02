@@ -12,14 +12,12 @@
 #include <fstream>
 #include <iostream>
 
-#include "CVector3.h"
-
 using namespace std;
 
-typedef struct VERTEX {
+typedef struct COORDINATE {
 	float x, y, z;
-	VERTEX(float a, float b, float c);
-} vert;
+	COORDINATE(float a, float b, float c);
+} coordinate;
 
 typedef struct FACE {
 	int faceNum;
@@ -51,9 +49,9 @@ class CObjLoader {
 
 private:
 	vector<string*> coords;
-	vector<vert*> verts;
+	vector<coordinate*> verts;
 	vector<face*> faces;
-	vector<vert*> normals;
+	vector<coordinate*> normals;
 	vector<unsigned int> texture;
 	vector<unsigned int> lists;
 	vector<material*> materials;
@@ -64,8 +62,6 @@ private:
 	void Cleanup(void);
 	
 public:
-	vector<CVector3> vec3;
-
 	CObjLoader(void);
 	~CObjLoader(void);
 	

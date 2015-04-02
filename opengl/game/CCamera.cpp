@@ -76,6 +76,18 @@ void CCamera::Destroy(void) {
 	delete this;
 }
 
+void CCamera::setCamX(float num) {
+	camX = num;
+}
+
+void CCamera::setCamY(float num) {
+	camX = num;
+}
+
+void CCamera::setCamZ(float num) {
+	camX = num;
+}
+
 float CCamera::getCamX(void) {
 	return camX;
 }

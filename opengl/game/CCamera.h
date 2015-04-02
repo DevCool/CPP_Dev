@@ -25,7 +25,11 @@ public:
 	void controlCamera(float, float, bool);
 	void updateCamera(void);
 	void Destroy(void);
-	
+
+	void setCamX(float num);
+	void setCamY(float num);
+	void setCamZ(float num);
+
 	float getCamX(void);
 	float getCamY(void);
 	float getCamZ(void);
