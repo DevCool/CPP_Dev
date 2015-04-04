@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 #include <fstream>
+#include <sstream>
 #include <iostream>
 
 using namespace std;
@@ -58,14 +59,14 @@ private:
 	vector<texcoord*> texcoords;
 	bool ismaterial, isnormals, istexture;
 	
-	unsigned int LoadTexture(const char *filename);
+	unsigned int LoadTexture(const char *directory, const char *filename);
 	void Cleanup(void);
 	
 public:
 	CObjLoader(void);
 	~CObjLoader(void);
 	
-	int LoadObject(const char *filename);
+	int LoadObject(const char *directory, const char *filename);
 	void Destroy(void);
 
 };

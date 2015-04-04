@@ -86,13 +86,13 @@ void CApp::InitOpenGL(int width, int height) {
 	glMatrixMode(GL_MODELVIEW);
 	glEnable(GL_DEPTH_TEST);
 	
-	if((myCube1 = objLoader.LoadObject("test4.obj")) == -1) {
+	if((myCube1 = objLoader.LoadObject("data", "test4.obj")) == -1) {
 		cout << "Cannot create object!" << endl;
 		SDL_Quit();
 		return;
 	}
 	
-	if((myMonkey1 = objLoader.LoadObject("test3.obj")) == -1) {
+	if((myMonkey1 = objLoader.LoadObject("data", "test3.obj")) == -1) {
 		cout << "Cannot create object!" << endl;
 		SDL_Quit();
 		return;

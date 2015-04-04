@@ -1,4 +1,4 @@
-OBJS=CCamera.o Functions.o CObjLoader.o CApp.o Main.o
+OBJS=CVector3.o CCamera.o Functions.o CObjLoader.o CApp.o Main.o
 CC=i686-w64-mingw32-gcc
 CXX=i686-w64-mingw32-g++
 CFLAGS=-O2 -Wall

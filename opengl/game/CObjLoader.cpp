@@ -101,11 +101,14 @@ CObjLoader::~CObjLoader(void) {
 	}
 }
 
-unsigned int CObjLoader::LoadTexture(const char *filename) {
+unsigned int CObjLoader::LoadTexture(const char *directory, const char *filename) {
 	unsigned int id;
 	SDL_Surface *image;
+	stringstream ss;
 
-	image = IMG_Load(filename);
+	ss << directory << "/" << filename;
+
+	image = IMG_Load(ss.str().c_str());
 
 	if (image == NULL) {
 		printf("bad image\n");
@@ -123,10 +126,14 @@ unsigned int CObjLoader::LoadTexture(const char *filename) {
 	return id;
 }
 
-int CObjLoader::LoadObject(const char *filename) {
-	ifstream in(filename);
+int CObjLoader::LoadObject(const char *directory, const char *filename) {
+	stringstream ss;
+
+	ss << directory << "/" << filename;
+
+	ifstream in(ss.str().c_str());
 	if(!in.is_open()) {
-		cout << "Cannot open " << filename << endl;
+		cout << "Cannot open " << ss.str().c_str() << endl;
 		return -1;
 	}
 	
@@ -199,10 +206,12 @@ int CObjLoader::LoadObject(const char *filename) {
 		}
 		else if(((*coords[i])[0] == 'm') && ((*coords[i])[1] == 't') && ((*coords[i])[2] == 'l') && ((*coords[i])[3] == 'l')) {
 			char filen[200];
+			stringstream ss2;
 			sscanf(coords[i]->c_str(), "mtllib %s", filen);
-			ifstream matlib_in(filen);
+			ss2 << directory << "/" << filen;
+			ifstream matlib_in(ss2.str().c_str());
 			if(!matlib_in.is_open()) {
-				cout << "Cannot open file: " << filen << endl;
+				cout << "Cannot open file: " << ss2.str().c_str() << endl;
 				Cleanup();
 				return -1;
 			}
@@ -266,7 +275,7 @@ int CObjLoader::LoadObject(const char *filename) {
 				}
 				else if((tmp[i][0] == 'm') && (tmp[i][1] == 'a') && (tmp[i][2] == 'p')) {
 					sscanf(tmp[i].c_str(), "map_Kd %s", filename);
-					texture = LoadTexture(filename);
+					texture = LoadTexture(directory, filename);
 					ismat = true;
 				}
 			}
