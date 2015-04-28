@@ -27,7 +27,7 @@ void Camera::destroyCamera() {
 	Camera *myCamera = &getCamera();
 	delete myCamera;
 
-	cout << "Camera Stop!" << endl;
+	cout << "Camera Destroyed!" << endl;
 }
 
 void Camera::lockCamera(void) {

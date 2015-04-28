@@ -1,6 +1,6 @@
-#Coded by Philip Simonson. (AKA DevCool)
+﻿#Coded by Philip Simonson. (AKA DevCool)
 
-OBJS=Main.o Application.o Camera.o ObjLoader.o
+OBJS=Main.o Application.o Camera.o ObjLoader.o ResourceManager.o
 EXECUTABLE=mygame
 CC=g++
 CXX=$(CC)

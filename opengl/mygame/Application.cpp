@@ -1,16 +1,14 @@
 #include "Application.h"
 
 Application::Application() {
-	cout << "Main Application Started!" << endl;
-
-	_camera = &Camera::getCamera();
-	_objLoader = &ObjLoader::getObjectLoader();
-
 	_testObject = 0;
 	_running = true;
 	_mousein = false;
-//	_tester = true;
 	_angle = 0.0;
+	
+	cout << "Application Started!" << endl;
+	_resourceManager = &ResourceManager::getResourceManager();
+	_camera = &Camera::getCamera();
 }
 
 Application::~Application() {
@@ -20,9 +18,9 @@ Application::~Application() {
 	if (_camera != NULL) {
 		_camera->destroyCamera();
 	}
-
-	if (_objLoader != NULL) {
-		_objLoader->destroyObjectLoader();
+	
+	if (_resourceManager != NULL) {
+		_resourceManager->destroyResourceManager();
 	}
 
 	SDL_Quit();
@@ -53,7 +51,7 @@ void Application::InitGL(void) {
 	gluPerspective(45.0, (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT, 0.1, 1000.0);
 	glMatrixMode(GL_MODELVIEW);
 
-	_testObject = _objLoader->loadObject("./data/test.obj");
+	_testObject = _resourceManager->getObjLoader().loadObject("./data/test.obj");
 
 	glEnable(GL_DEPTH_TEST);
 	glClearDepth(1.0);
@@ -124,4 +122,3 @@ void Application::KeyHandler(void) {
 		SDL_ShowCursor(SDL_ENABLE);
 	}
 }
-

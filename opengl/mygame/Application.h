@@ -11,7 +11,7 @@
 #include <SDL/SDL_image.h>
 
 #include "Camera.h"
-#include "ObjLoader.h"
+#include "ResourceManager.h"
 
 using namespace std;
 
@@ -25,7 +25,7 @@ class Application
 		SDL_Surface* _screen;
 
 		Camera* _camera;
-		ObjLoader* _objLoader;
+		ResourceManager* _resourceManager;
 
 		Application();
 		~Application();
