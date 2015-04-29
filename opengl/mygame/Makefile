@@ -1,4 +1,4 @@
-﻿#Coded by Philip Simonson. (AKA DevCool)
+# Coded by Philip Simonson. (AKA DevCool)
 
 OBJS=Main.o Application.o Camera.o ObjLoader.o ResourceManager.o
 EXECUTABLE=mygame
@@ -8,17 +8,15 @@ CFLAGS=-std=c++11 -O2 -Wall
 CXXFLAGS=$(CFLAGS)
 LD=$(CXX)
 
-all: $(EXECUTABLE) clean
+all: $(EXECUTABLE)
 
-rebuild: cleanest all
+rebuild: clean all
 
 $(EXECUTABLE): $(OBJS)
-	$(LD) $(CFLAGS) $(OBJS) -o $@ -lGL -lGLU -lSDLmain -lSDL
+	$(LD) $(CFLAGS) $(OBJS) -o $@ -lSDLmain -lSDL -lGL -lGLU
 
 clean:
 	@echo Cleaning up...
-	@rm *.o
+	@rm *.o $(EXECUTABLE)
 	@echo Done.
 
-cleanest:
-	@rm $(EXECUTABLE)
