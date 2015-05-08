@@ -133,10 +133,10 @@ void display() {
 		glTexCoord2f(0, 5); glVertex3f(50.0, 0.0, -50.0);
 	glEnd();
 
-	for(int i=0; i<5; i++) {
-		for(int j=0; j<10; j++) {
+	for(int i=0; i<8; i++) {
+		for(int j=0; j<5; j++) {
 			glPushMatrix();
-			glTranslatef(sin(i+j)*5.0, 1.0, cos(i+j)*5.0);
+			glTranslatef(sin(i+j*1.5f)*8.0f, 1.0f, cos(i+j*1.5f)*8.0f);
 			glRotatef(angle, 1.0, 1.0, 0.0);
 			glCallList(CUBE_LIST);
 			glPopMatrix();
