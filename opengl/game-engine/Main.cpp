@@ -1,4 +1,4 @@
-#include "GameClass.h"
+#include "GameClass.hpp"
 
 int main(int argc, char* args[]) {
 

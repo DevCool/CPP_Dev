@@ -1,6 +1,6 @@
 # Coded by Philip Simonson. (AKA DevCool)
 
-OBJS=Main.o GameClass.o
+OBJS=Main.o GameClass.o RenderSystem.o
 EXECUTABLE=game
 CC=g++
 CXX=$(CC)

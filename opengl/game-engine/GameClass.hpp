@@ -2,9 +2,9 @@
 #define GameClass_hpp
 
 #include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
-#include <GL/glu.h>
 #include <iostream>
+
+#include "RenderSystem.hpp"
 
 
 // Game Class Definition
@@ -16,6 +16,8 @@ private:
 	sf::Event _event;
 
 	bool _running;
+
+	RenderSystem* _renderSystemObj;
 
 	GameClass(void);
 	~GameClass(void);

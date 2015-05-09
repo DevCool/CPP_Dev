@@ -15,7 +15,8 @@ GameClass::GameClass(void) {
 			sf::Style::Default, _settings);
 	_window.setVerticalSyncEnabled(true);
 
-	std::cout << "Game Initialised!" << std::endl;
+	std::cout << "Game Object Created!" << std::endl;
+	_renderSystemObj = &RenderSystem::getRenderSystem();
 
 }
 
@@ -23,6 +24,11 @@ GameClass::GameClass(void) {
 GameClass::~GameClass(void) {
 
 	// Delete resources and free memory here
+	if(_renderSystemObj != NULL) {
+		_renderSystemObj->destroyRenderSystem();
+	}
+
+	std::cout << "Game Object Destroyed!" << std::endl;
 
 }
 
@@ -56,27 +62,13 @@ void GameClass::destroyGameClass(void) {
 	GameClass* gameClassObj = &getGameClass();
 	delete gameClassObj;
 
-	std::cout << "Game Object Destroyed!" << std::endl;
-
 }
 
 // Start() function : Main Game Loop resides in
 // this function.
 int GameClass::Start(void) {
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	glViewport(0, 0, _event.size.width, _event.size.height);
-	gluLookAt(0.0f, 1.0f, -5.0f,
-		 0.0f, 0.0f, 0.0f,
-		 0.0f, 1.0f, 0.0f);
-	gluPerspective(45.0f, (float)(_window.getSize().x/_window.getSize().y),
-			1.0f, 500.0f);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glClearColor(0.2f, 0.2f, 0.6f, 1.0f);
+	_renderSystemObj->InitGL(_window, _event);
 
 	while(_running) {
 		while(_window.pollEvent(_event)) {
@@ -90,9 +82,8 @@ int GameClass::Start(void) {
 			}
 		}
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glFlush();
-
+		_renderSystemObj->Update();
+		_renderSystemObj->Render();
 		_window.display();
 	}
 
